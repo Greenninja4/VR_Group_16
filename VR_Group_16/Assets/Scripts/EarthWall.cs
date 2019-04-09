@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EarthWall : MonoBehaviour {
+public class EarthWall : MonoBehaviour
+{
 
     Vector3 vec_3m_height;
     Vector3 avg_hands;
@@ -14,31 +15,34 @@ public class EarthWall : MonoBehaviour {
     float disp_max;
     float y_rot;
     bool wall_active;
-    public Transform groundPrefab;
 
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start()
+    {
         wall_active = false;
         this.GetComponent<MeshRenderer>().enabled = false;
-        vec_3m_height = new Vector3(0,4,0);
+        vec_3m_height = new Vector3(0, 4, 0);
         disp = 0.0f;
         disp_max = 0.8f;
 
-        Transform ground = Instantiate(groundPrefab) as Transform;
-        Physics.IgnoreCollision(ground.GetComponent<Collider>(), GetComponent<Collider>());
-	}
-	
-	//Update is called once per frame
-	void Update () {
+    }
+
+    //Update is called once per frame
+    void Update()
+    {
         // If both controller triggers activate
-        if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) > 0.5 && OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) > 0.5){
+        if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) > 0.5 && OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) > 0.5)
+        {
 
             // Initial hand position
-            avg_hands = (OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch) 
-                        + OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch))/2;
-            
+            avg_hands = (OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch)
+                        + OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch)) / 2;
+            print(avg_hands);
+
             // If wall not previously active, enable
-            if (!wall_active){
+            if (!wall_active)
+            {
                 wall_active = true;
                 // Enable wall
                 this.GetComponent<MeshRenderer>().enabled = true;
@@ -48,9 +52,13 @@ public class EarthWall : MonoBehaviour {
                 head_to_control = avg_hands - player.transform.position;
                 head_to_control.y = 0.0f;
                 head_to_control = head_to_control.normalized;
-                wall_pos_min = player.transform.position + 3*(head_to_control);
+                print(head_to_control);
+                avg_hands.y = 0.0f;
+                avg_hands = avg_hands.normalized;
+                wall_pos_min = player.transform.position + 3 * (avg_hands);
                 wall_pos_min.y = -2.0f;
                 transform.position = wall_pos_min;
+                print(wall_pos_min);
 
                 // Wall rotation is equal to head_to_control atan(x/z)
                 //y_rot = Mathf.Atan(head_to_control.x/head_to_control.z);
@@ -63,39 +71,53 @@ public class EarthWall : MonoBehaviour {
             disp = avg_hands.y - hand_init_height;
 
             // If displacement is above max amount
-            if (disp > disp_max){
+            if (disp > disp_max)
+            {
                 // Wall reaches max height
                 transform.position = wall_pos_min + vec_3m_height;
             }
-                
+
             // Else if displacement is positive
-            else if (disp > 0.0f){
+            else if (disp > 0.0f)
+            {
                 // Wall moves up amount of displacement
-                transform.position = wall_pos_min + (disp/disp_max)*vec_3m_height;
+                transform.position = wall_pos_min + (disp / disp_max) * vec_3m_height;
             }
 
             // Else
-            else{
+            else
+            {
                 // Wall stays at min position
                 transform.position = wall_pos_min;
             }
         }
 
         // Else
-        else{
+        else
+        {
             // Wall experiences gravity
 
             // If wall position is wall_pos_min, set to null and disable
-            if (transform.position.y <= wall_pos_min.y){
+            if (transform.position.y <= wall_pos_min.y)
+            {
                 wall_active = false;
                 transform.position = wall_pos_min;
                 this.GetComponent<MeshRenderer>().enabled = false;
             }
 
         }
-                
-        
-            
+
+
+
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+        }
+    }
+
 }
 
