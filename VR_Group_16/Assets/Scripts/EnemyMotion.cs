@@ -8,12 +8,11 @@ public class EnemyMotion : MonoBehaviour {
     Transform player;
 
     
-    private float speed = 3f, playerRadius = 2f;
+    private float speed = 6f, playerRadius = 2f;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("MainPlayer").transform;
-
     }
 
     // Use this for initialization
