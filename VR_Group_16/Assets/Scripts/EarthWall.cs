@@ -7,13 +7,16 @@ public class EarthWall : MonoBehaviour
 
     Vector3 vec_3m_height;
     Vector3 avg_hands;
+    Vector3 avg_hands_norm;
     Vector3 wall_pos_min;
-    Vector3 head_to_control;
+    Vector3 wall_cur_pos;
+    Quaternion wall_cur_rot;
     public GameObject player;
     float hand_init_height;
     float disp;
     float disp_max;
     float y_rot;
+    float timer;
     bool wall_active;
 
 
@@ -22,9 +25,11 @@ public class EarthWall : MonoBehaviour
     {
         wall_active = false;
         this.GetComponent<MeshRenderer>().enabled = false;
-        vec_3m_height = new Vector3(0, 4, 0);
+        this.GetComponent<Rigidbody>().isKinematic = false;
+        vec_3m_height = new Vector3(0, 3, 0);
         disp = 0.0f;
         disp_max = 0.8f;
+        timer = 0.0f;
 
     }
 
@@ -38,7 +43,6 @@ public class EarthWall : MonoBehaviour
             // Initial hand position
             avg_hands = (OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch)
                         + OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch)) / 2;
-            print(avg_hands);
 
             // If wall not previously active, enable
             if (!wall_active)
@@ -46,26 +50,25 @@ public class EarthWall : MonoBehaviour
                 wall_active = true;
                 // Enable wall
                 this.GetComponent<MeshRenderer>().enabled = true;
+                this.GetComponent<Rigidbody>().isKinematic = true;
 
                 // Wall position goes to below ground, 3 m in front of average head-to-controller direction
                 hand_init_height = avg_hands.y;
-                head_to_control = avg_hands - player.transform.position;
-                head_to_control.y = 0.0f;
-                head_to_control = head_to_control.normalized;
-                print(head_to_control);
-                avg_hands.y = 0.0f;
-                avg_hands = avg_hands.normalized;
-                wall_pos_min = player.transform.position + 3 * (avg_hands);
-                wall_pos_min.y = -2.0f;
+                avg_hands_norm = avg_hands;
+                avg_hands_norm.y = 0.0f;
+                avg_hands_norm = avg_hands_norm.normalized;
+                wall_pos_min = player.transform.position + 4 * (avg_hands_norm);
+                wall_pos_min.y = -1.5f;
                 transform.position = wall_pos_min;
-                print(wall_pos_min);
 
                 // Wall rotation is equal to head_to_control atan(x/z)
-                //y_rot = Mathf.Atan(head_to_control.x/head_to_control.z);
-                //transform.rotation = Quaternion.Euler(0,y_rot,0);
-                transform.rotation = Quaternion.identity;
+                y_rot = Mathf.Atan2(avg_hands.x,avg_hands.z) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0,y_rot,0);
+                //transform.rotation = Quaternion.identity;
+
+                //Set timer
+                timer = 5.0f;
             }
-            transform.rotation = Quaternion.identity;
 
             // Calculate average vertical displacement from recorded position
             disp = avg_hands.y - hand_init_height;
@@ -90,12 +93,26 @@ public class EarthWall : MonoBehaviour
                 // Wall stays at min position
                 transform.position = wall_pos_min;
             }
+
+            // Save pos and rot
+            wall_cur_pos = transform.position;
+            wall_cur_rot = transform.rotation;
         }
 
         // Else
         else
         {
+
             // Wall experiences gravity
+            if(timer > 0.0f){
+                timer -= Time.deltaTime;
+                transform.position = wall_cur_pos;
+                transform.rotation = wall_cur_rot;
+            }
+            else{
+                this.GetComponent<Rigidbody>().isKinematic = false;
+                this.GetComponent<Rigidbody>().useGravity = true;
+            }
 
             // If wall position is wall_pos_min, set to null and disable
             if (transform.position.y <= wall_pos_min.y)
@@ -103,11 +120,10 @@ public class EarthWall : MonoBehaviour
                 wall_active = false;
                 transform.position = wall_pos_min;
                 this.GetComponent<MeshRenderer>().enabled = false;
+                this.GetComponent<Rigidbody>().isKinematic = false;
             }
 
         }
-
-
 
     }
 
