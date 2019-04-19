@@ -113,7 +113,6 @@ public class EarthWall : MonoBehaviour
                 this.GetComponent<Rigidbody>().isKinematic = false;
                 this.GetComponent<Rigidbody>().useGravity = true;
             }
-            print(this.GetComponent<Rigidbody>().velocity);
 
             // If wall position is wall_pos_min, set to null and disable
             if (transform.position.y <= wall_pos_min.y)
@@ -125,8 +124,6 @@ public class EarthWall : MonoBehaviour
             }
 
         }
-
-        print(timer);
 
     }
 
