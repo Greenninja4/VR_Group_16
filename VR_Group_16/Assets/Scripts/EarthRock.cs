@@ -4,109 +4,127 @@ using UnityEngine;
 
 public class EarthRock : MonoBehaviour {
 
-    public bool rock_active;
-    public bool rock_visible;
-    public int hand; // 0 = none, 1 = Left, 2 = Right
+    //Intialize external public elements
+    public OVRInput.Controller Lcontroller;
+    public OVRInput.Controller Rcontroller;
+    public GameObject[] projectiles;
     public GameObject player;
-    float timer;
-    float thrust;
-    Vector3 l_hand_vec;
-    Vector3 l_hand_vec_norm;
-    Vector3 vec_to_pos;
-    Vector3 expected_pos;
+
+    //Initialize private elements
+    private int elementIndex_l;
+    private int elementIndex_r;
+    private float thrust;
+    private GameObject selectedItem_l;
+    private GameObject selectedItem_r;
+    private GameObject leftHandAnchor;
+    private GameObject rightHandAnchor;
+    private GameObject trackingSpace;
+    private GameObject rock_l;
+    private GameObject rock_r;
+    private Vector3 hand_vec_l;
+    private Vector3 hand_norm_l;
+    private Vector3 hand_norm_r;
+    private Vector3 vec_to_pos;
+    private Vector3 end_pos;
+
+    //Initialize private constants
+    private float trigger_thresh = 0.5f; //0 to 1, threshold for trigger activation
+    private float nextFire;
+    private float fireRate = 0.5f; //In sec
+    private float float_dist = 2.0f; //End distance (in m) away from hand
+    private float attraction_const = 0.2f; //0 to 1, Larger -> Faster attraction
+    private float thrust_const = 10.0f; //Constant of thrust
+
+
 
 	// Use this for initialization
 	void Start () {
-		// Disable
-        rock_active = false;
-        rock_visible = false;
-        this.GetComponent<MeshRenderer>().enabled = false;
-        this.GetComponent<Rigidbody>().isKinematic = false;
+        // Get left and right hand game objects
+        trackingSpace = player.transform.Find("OVRCameraRig").gameObject.transform.Find("TrackingSpace").gameObject;
+        leftHandAnchor = trackingSpace.transform.Find("LeftHandAnchor").gameObject;
+        rightHandAnchor = trackingSpace.transform.Find("RightHandAnchor").gameObject;
 
-        //Default hand to none
-        hand = 0;
-        timer = 0.0f;
+        // Set left and right rocks to null
+        rock_l = null;
+        rock_r = null;
+
+        // Set initial nextfire time to 0 sec
+        nextFire = 0.0f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        // If chosen and not enabled
-        if (rock_active){
-            l_hand_vec = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
-            l_hand_vec_norm = l_hand_vec.normalized;
+        //Record current element index of each hand
+        elementIndex_l = leftHandAnchor.GetComponent<BallShooting>().elementIndex;
+        elementIndex_r = rightHandAnchor.GetComponent<BallShooting>().elementIndex;
 
-            // Enable
-            if(!rock_visible){
-                this.GetComponent<MeshRenderer>().enabled = true;
-                this.GetComponent<Rigidbody>().isKinematic = true;
-                rock_visible = true;
-                timer = 5.0f;
+        //If Earth is current element in left
+        if(elementIndex_l == 0){
 
-                // Set start position at 5 m from active hand along ray
-                transform.position = player.transform.position + 6 * l_hand_vec_norm;
+            //If rock is held, check trigger
+            if(rock_l != null){
+
+                if(OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Lcontroller) > trigger_thresh){
+
+                    //Calculate normalized hand vector
+                    hand_vec_l = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
+                    hand_norm_l = hand_vec_l.normalized;
+
+                    //Record expected end position of rock
+                    end_pos = player.transform.position + float_dist*hand_norm_l;
+
+                    // Bring rock a fraction closer to expected position each update
+                    vec_to_pos = end_pos - rock_l.transform.position;
+                    transform.position += vec_to_pos*attraction_const;            
+                }
+
+                // If trigger not held, throw rock
+                else{
+                    // Launch rock
+                    thrust = thrust_const/(Vector3.Distance(end_pos, rock_l.transform.position)+1.0f);
+                    rock_l.GetComponent<Rigidbody>().AddForce(hand_norm_l*thrust);
+                }
 
             }
-            
-            // If trigger held
-            if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) > 0.5){
 
-                expected_pos = player.transform.position + 2*l_hand_vec_norm;
-
-                // Come a fraction closer to expected position each update
-                vec_to_pos = expected_pos - transform.position;
-                transform.position += vec_to_pos/5;            
-            }
-
-            //Else, launch rock
+            //If rock is not held, check trigger
             else{
-                rock_active = false;
-                // Force of launch in direction of hand
-                // Force inversely proportional to distance to hand
-                thrust = 10/Vector3.Distance(player.transform.position + l_hand_vec, transform.position);
-                this.GetComponent<Rigidbody>().AddForce(l_hand_vec_norm*thrust);
-            }
-            
-        }
 
-        // Else rock is disabled
-        else{
+                 // Instantiate/control rock if index trigger is held and cooldown period has passed
+                if((OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Lcontroller) > trigger_thresh)&&(Time.time > nextFire)){
             
-            if(timer > 0.0f){
-                // Rock experiences gravity
-                this.GetComponent<Rigidbody>().isKinematic = false;
-                this.GetComponent<Rigidbody>().useGravity = true;
+                    //Record current selected item
+                    selectedItem_l = leftHandAnchor.GetComponent<BallShooting>().selectedItem;
 
-                timer -= Time.deltaTime;
-            }
-            else{
-                // Rock fully disabled
-                rock_active = false;
-                this.GetComponent<MeshRenderer>().enabled = false;
-                this.GetComponent<Rigidbody>().isKinematic = false;
-                
-            }
-            
+                    // If controller pointed at ground, produce new object
+                    if(selectedItem_l.tag == "Ground"){
+                        rock_l = Instantiate(projectiles[elementIndex_l], leftHandAnchor.GetComponent<BallShooting>().hitpoint, Quaternion.identity);
 
-        }
-            
+                        //Update next firing time
+                        nextFire = Time.time + fireRate;                
+                    }
 
-            
-        
-            
-                
-            
-        
-        
-	}
+                    else if(selectedItem_l.tag == "Rock"){
+                        rock_l = selectedItem_l;
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) > 0.5){
-                Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+                        //Update next firing time
+                        nextFire = Time.time + fireRate;
+                    }
+                }
             }
         }
     }
-}
+} 
+        
+        
+
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     if (collision.gameObject.tag == "Ground")
+    //     {
+    //         if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) > 0.5){
+    //             Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+    //         }
+    //     }
+    // }

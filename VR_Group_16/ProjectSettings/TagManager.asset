@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - MainPlayer
+  - Rock
   layers:
   - Default
   - TransparentFX

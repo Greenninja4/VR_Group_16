@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 114304493805659160}
   - component: {fileID: 114688067883571518}
   - component: {fileID: 114728665688141990}
+  - component: {fileID: 114079030942345860}
   m_Layer: 0
   m_Name: OVRPlayerController
   m_TagString: MainPlayer
@@ -640,7 +641,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1702293030690630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.33, z: -11.2}
+  m_LocalPosition: {x: 0, y: 1.86, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4529726015056598}
@@ -1078,6 +1079,25 @@ MonoBehaviour:
   m_grabVolumes: []
   m_controller: 1
   m_parentTransform: {fileID: 0}
+--- !u!114 &114079030942345860
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1702293030690630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82e2a50e599c7a4439700c5549f03ea2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lcontroller: 1
+  Rcontroller: 2
+  projectiles:
+  - {fileID: 1448496808827442, guid: 75b4c2fc62d008c46b45ba4478453a66, type: 2}
+  - {fileID: 1922013312114606, guid: 736e016f30656d448a7896738f07b210, type: 2}
+  - {fileID: 1090672891181166, guid: 4f5c54a6ec34a754d967e95ba52b217d, type: 2}
+  - {fileID: 1618947771414310, guid: fcd3146c827920041b41f5db30c33058, type: 2}
+  player: {fileID: 1702293030690630}
 --- !u!114 &114206787304968670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1092,12 +1112,8 @@ MonoBehaviour:
   controller: 2
   laserEnd: {fileID: 4362479834223666}
   laserBegin: {fileID: 4550762453801622}
-  selectedItem: 
-  projectiles:
-  - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
-  - {fileID: 1271192691012698, guid: 43d6ab435386f83448e0ad8c83d7d21b, type: 2}
-  - {fileID: 1272952387971198, guid: e39e6c4ffa3ddff40be2b3c3624d6508, type: 2}
-  - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
+  hitpoint: {x: 0, y: 0, z: 0}
+  selectedItem: {fileID: 0}
   elementIndex: 0
 --- !u!114 &114304493805659160
 MonoBehaviour:
@@ -1150,12 +1166,8 @@ MonoBehaviour:
   controller: 1
   laserEnd: {fileID: 4972134300563888}
   laserBegin: {fileID: 4429464240787112}
-  selectedItem: 
-  projectiles:
-  - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
-  - {fileID: 1271192691012698, guid: 43d6ab435386f83448e0ad8c83d7d21b, type: 2}
-  - {fileID: 1272952387971198, guid: e39e6c4ffa3ddff40be2b3c3624d6508, type: 2}
-  - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
+  hitpoint: {x: 0, y: 0, z: 0}
+  selectedItem: {fileID: 0}
   elementIndex: 0
 --- !u!114 &114488062629777728
 MonoBehaviour:

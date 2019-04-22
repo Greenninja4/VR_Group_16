@@ -8,13 +8,14 @@ public class BallShooting : MonoBehaviour {
     public OVRInput.Controller controller;
     public Transform laserEnd, laserBegin;
     private LineRenderer laserLine;
-    public string selectedItem;
+    public Vector3 hitpoint;
+    public GameObject selectedItem;
     private float range = 100f, speed = 20f;
 
-    private float nextFire, trigger, fireRate = .1f;
-    public GameObject[] projectiles;
+    // private float nextFire, trigger, fireRate = .1f;
+    // public GameObject[] projectiles;
     public int elementIndex = 0;
-    private int projectileLifetime = 20;
+    // private int projectileLifetime = 20;
 
 
     void Start () {
@@ -33,25 +34,26 @@ public class BallShooting : MonoBehaviour {
         if (Physics.Raycast(laserRay, out hit, 100))
         {
             laserLine.SetPosition(1, hit.point);
-            selectedItem = hit.collider.name;
+            hitpoint = hit.point;
+            selectedItem = hit.collider.gameObject;
         }
         else
         {
             laserLine.SetPosition(1, laserBegin.position + (rayDirection * range));
         }
 
-        trigger = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller); ;
+        // trigger = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller); ;
 
 
-        if (trigger > 0.5 && Time.time > nextFire)
-        {
-            nextFire = Time.time + fireRate;
-            GameObject newProjectile = Instantiate(projectiles[elementIndex], laserEnd.position, laserEnd.rotation);
+        // if (trigger > 0.5 && Time.time > nextFire)
+        // {
+        //     nextFire = Time.time + fireRate;
+        //     GameObject newProjectile = Instantiate(projectiles[elementIndex], laserEnd.position, laserEnd.rotation);
         
-            newProjectile.GetComponent<Rigidbody>().velocity = rayDirection * speed;
-            Destroy(newProjectile, projectileLifetime);
+        //     newProjectile.GetComponent<Rigidbody>().velocity = rayDirection * speed;
+        //     Destroy(newProjectile, projectileLifetime);
 
-        }
+        // }
 
         if (OVRInput.GetDown(OVRInput.Button.One, controller))
         {
