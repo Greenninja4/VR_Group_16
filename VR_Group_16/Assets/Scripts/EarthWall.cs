@@ -120,9 +120,6 @@ public class EarthWall : MonoBehaviour
                     // Find average hand position when activated
                     avg_hands = (OVRInput.GetLocalControllerPosition(Lcontroller)
                             + OVRInput.GetLocalControllerPosition(Rcontroller)) / 2;
-                    print(avg_hands);
-                    print(centerEye.transform.position);
-                    print(player.transform.position);
 
                     // Set wall position float_dist in front of player's hands (relative to headset)
                     hand_init_height = avg_hands.y;
@@ -130,7 +127,6 @@ public class EarthWall : MonoBehaviour
                     avg_hands_norm.y = 0.0f;
                     avg_hands_norm = avg_hands_norm.normalized;
                     wall_pos_min =  centerEye.transform.position + float_dist * (avg_hands_norm);
-                    print(wall_pos_min);
                     wall_pos_min.y = pos_y_const - rockwallprefab.transform.localScale.y/2;
 
                     // Set wall rotation such that it starts normal to player
