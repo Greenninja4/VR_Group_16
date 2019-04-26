@@ -17,14 +17,13 @@ public class FireThrow : MonoBehaviour {
     private GameObject fireball;
     private Vector3 controller_pos;
     private Vector3 end_pos;
-    private Vector3 above_ground;
     private Vector3 forward;
     private Quaternion controller_rot;
 
     //Initialize private constants
     private float trigger_thresh = 0.5f; //0 to 1, threshold for trigger activation
     private float nextFire;
-    private float fireRate = 0.5f; //In sec
+    private float fireRate = 4.0f; //In sec
     private float float_dist = 2.0f; //End distance (in m) away from hand
     private float thrust_const = 175.0f; //Constant of thrust
     private int projectileLifetime = 20;
@@ -42,8 +41,7 @@ public class FireThrow : MonoBehaviour {
         // Set initial nextfire time to 0 sec
         nextFire = 0.0f;
 
-        // Set height of fireball instantiation
-        above_ground = new Vector3(0.0f, 0.5f, 0.0f);
+        // Set fireball instantiation direction
         forward = new Vector3(0.0f,0.0f,1.0f);
 	}
 	

@@ -25,7 +25,7 @@ public class WaterThrow : MonoBehaviour {
     //Initialize private constants
     private float trigger_thresh = 0.5f; //0 to 1, threshold for trigger activation
     private float nextFire;
-    private float fireRate = 0.5f; //In sec
+    private float fireRate = 4.0f; //In sec
     private float float_dist = 2.0f; //End distance (in m) away from hand
     private float attraction_const = 0.02f; //0 to 1, Larger -> Faster attraction
     private float thrust_const = 175.0f; //Constant of thrust

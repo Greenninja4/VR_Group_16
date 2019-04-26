@@ -4,138 +4,145 @@ using UnityEngine;
 
 public class EarthWall : MonoBehaviour
 {
+    // Initialize external public elements
+    public GameObject player;
+    public GameObject centerEye;
+    public GameObject rockwallprefab;
+    public OVRInput.Controller Lcontroller;
+    public OVRInput.Controller Rcontroller;
+    public GameObject leftHandAnchor;
+    public GameObject rightHandAnchor;
 
-    // Vector3 vec_3m_height;
-    // Vector3 avg_hands;
-    // Vector3 avg_hands_norm;
-    // Vector3 wall_pos_min;
-    // Vector3 wall_cur_pos;
-    // Quaternion wall_cur_rot;
-    // public GameObject player;
-    // float hand_init_height;
-    // float disp;
-    // float disp_max;
-    // float y_rot;
-    // float timer;
-    // bool wall_active;
+    // Initialize private elements
+    private int active_walls;
+    private GameObject cur_wall;
+    private float hand_init_height;
+    private Vector3 wall_pos_min;
+    private Quaternion wall_rot;
+    private Vector3 avg_hands;
+    private Vector3 avg_hands_norm;
+    private float disp;
+    private int rotating_timer_cnt;//Rotates 0->1->2->..->max_active_walls->0 so that timers are not overwritten
+    private int elementIndexL;
+    private int elementIndexR;
+
+    // Initilialize private constants
+    private int max_active_walls = 3;
+    private float float_dist = 4.0f; //End distance (in m) away from player
+    private float disp_max = 0.8f; // Max displacement for hands (in m) relative to initial hand height
+    private float wallLifetime = 10.0f; //Time (in sec) that each wall stays up
+    private float pos_y_const = 0.01f; // Prevents z-fighting in wall render
+
+    private float[] timers; // Set timers to know how many walls are still active
 
 
     // Use this for initialization
-    void Start()
-    {
-        // wall_active = false;
-        // this.GetComponent<MeshRenderer>().enabled = false;
-        // this.GetComponent<Rigidbody>().isKinematic = false;
-        // vec_3m_height = new Vector3(0, 3, 0);
-        // disp = 0.0f;
-        // disp_max = 0.8f;
-        // timer = 0.0f;
+    void Start(){
 
+        // Set initial variable defaults
+        active_walls = 0;
+        cur_wall = null;
+        rotating_timer_cnt = 0;
+        timers = new float[max_active_walls];
+        for (int i = 0;i<max_active_walls;i++){
+            timers[i] = 0.0f;
+        }
+
+        // Get tracking space
+        centerEye = player.transform.Find("OVRCameraRig").gameObject.transform.Find("TrackingSpace").gameObject.transform.Find("CenterEyeAnchor").gameObject;
     }
 
     //Update is called once per frame
-    void Update()
-    {
-        // // If both controller triggers activate
-        // if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) > 0.5 && OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) > 0.5)
-        // {
+    void Update(){
 
-        //     // Initial hand position
-        //     avg_hands = (OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch)
-        //                 + OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch)) / 2;
+        // Record current element index of each hand
+        elementIndexL = leftHandAnchor.GetComponent<BallShooting>().elementIndex;
+        elementIndexR = rightHandAnchor.GetComponent<BallShooting>().elementIndex;
 
-        //     // If wall not previously active, enable
-        //     if (!wall_active)
-        //     {
-        //         wall_active = true;
-        //         // Enable wall
-        //         this.GetComponent<MeshRenderer>().enabled = true;
-        //         this.GetComponent<Rigidbody>().isKinematic = true;
+        // Update number of active walls using timer array
+        active_walls = 0;
+        for (int i = 0;i<max_active_walls;i++){
+            timers[i] -= Time.deltaTime;
+            if (timers[i] > 0.0f){
+                active_walls += 1;
+            }
+        }
 
-        //         // Wall position goes to below ground, 3 m in front of average head-to-controller direction
-        //         hand_init_height = avg_hands.y;
-        //         avg_hands_norm = avg_hands;
-        //         avg_hands_norm.y = 0.0f;
-        //         avg_hands_norm = avg_hands_norm.normalized;
-        //         wall_pos_min = player.transform.position + 4 * (avg_hands_norm);
-        //         wall_pos_min.y = -1.5f;
-        //         transform.position = wall_pos_min;
+        // If Earth is current element for both hands
+        if ((elementIndexL == 0)&&(elementIndexR == 0)){
 
-        //         // Wall rotation is equal to head_to_control atan(x/z)
-        //         y_rot = Mathf.Atan2(avg_hands.x,avg_hands.z) * Mathf.Rad2Deg;
-        //         transform.rotation = Quaternion.Euler(0,y_rot,0);
-        //         //transform.rotation = Quaternion.identity;
+            // If a wall is currently being held
+            if(cur_wall != null){
 
-        //         //Set timer
-        //         timer = 5.0f;
-        //     }
+                // Wall position goes to below ground, in front of player
+                avg_hands = (OVRInput.GetLocalControllerPosition(Lcontroller)
+                        + OVRInput.GetLocalControllerPosition(Rcontroller)) / 2;
+                
+                //Don't change wall x,z coordinates, nor rotation, but adjust height
+                disp = avg_hands.y - hand_init_height;
+                
+                // If hands above max height, set wall to max height
+                if(disp > disp_max){
+                    cur_wall.transform.position = new Vector3(cur_wall.transform.position.x, wall_pos_min.y+rockwallprefab.transform.localScale.y, cur_wall.transform.position.z);
+                }
 
-        //     // Calculate average vertical displacement from recorded position
-        //     disp = avg_hands.y - hand_init_height;
+                // Else if hands above min height, set wall to proportionate height
+                else if(disp > 0.0f){
+                    cur_wall.transform.position = new Vector3(cur_wall.transform.position.x, ((disp / disp_max)-0.5f) * rockwallprefab.transform.localScale.y + pos_y_const, cur_wall.transform.position.z);
+                }
 
-        //     // If displacement is above max amount
-        //     if (disp > disp_max)
-        //     {
-        //         // Wall reaches max height
-        //         transform.position = wall_pos_min + vec_3m_height;
-        //     }
+                else{
+                    cur_wall.transform.position = new Vector3(cur_wall.transform.position.x, wall_pos_min.y, cur_wall.transform.position.z);
+                }
 
-        //     // Else if displacement is positive
-        //     else if (disp > 0.0f)
-        //     {
-        //         // Wall moves up amount of displacement
-        //         transform.position = wall_pos_min + (disp / disp_max) * vec_3m_height;
-        //     }
+                // Maintain same rotation
+                cur_wall.transform.rotation = wall_rot;
 
-        //     // Else
-        //     else
-        //     {
-        //         // Wall stays at min position
-        //         transform.position = wall_pos_min;
-        //     }
+                // If triggers not held anymore, set wall to current position/rotation
+                if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Lcontroller) <= 0.5 
+                && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Rcontroller) <= 0.5){
+                    
+                    Destroy(cur_wall, wallLifetime);
+                    cur_wall = null;
+                    timers[rotating_timer_cnt] = wallLifetime;
+                    rotating_timer_cnt = (rotating_timer_cnt+1) % max_active_walls;
+                }
+            }
 
-        //     // Save pos and rot
-        //     wall_cur_pos = transform.position;
-        //     wall_cur_rot = transform.rotation;
-        // }
+            // Else if no wall being held, check if new wall can be built
+            else if (active_walls < max_active_walls){
 
-        // // Else
-        // else
-        // {
+                // If triggers held, build new wall
+                if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Lcontroller) > 0.5 
+                && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Rcontroller) > 0.5){
 
-            
-        //     if(timer > 0.0f){
-        //         timer -= Time.deltaTime;
-        //         transform.position = wall_cur_pos;
-        //         transform.rotation = wall_cur_rot;
-        //     }
-            
-        //     else{
-        //         // Wall experiences gravity
-        //         this.GetComponent<Rigidbody>().isKinematic = false;
-        //         this.GetComponent<Rigidbody>().useGravity = true;
-        //     }
 
-        //     // If wall position is wall_pos_min, set to null and disable
-        //     if (transform.position.y <= wall_pos_min.y)
-        //     {
-        //         wall_active = false;
-        //         transform.position = wall_pos_min;
-        //         this.GetComponent<MeshRenderer>().enabled = false;
-        //         this.GetComponent<Rigidbody>().isKinematic = false;
-        //     }
+                    // Find average hand position when activated
+                    avg_hands = (OVRInput.GetLocalControllerPosition(Lcontroller)
+                            + OVRInput.GetLocalControllerPosition(Rcontroller)) / 2;
+                    print(avg_hands);
+                    print(centerEye.transform.position);
+                    print(player.transform.position);
 
-        // }
+                    // Set wall position float_dist in front of player's hands (relative to headset)
+                    hand_init_height = avg_hands.y;
+                    avg_hands_norm = avg_hands + player.transform.position - centerEye.transform.position;
+                    avg_hands_norm.y = 0.0f;
+                    avg_hands_norm = avg_hands_norm.normalized;
+                    wall_pos_min =  centerEye.transform.position + float_dist * (avg_hands_norm);
+                    print(wall_pos_min);
+                    wall_pos_min.y = pos_y_const - rockwallprefab.transform.localScale.y/2;
 
-    }
+                    // Set wall rotation such that it starts normal to player
+                    wall_rot = Quaternion.Euler(0, Mathf.Atan2(avg_hands_norm.x,avg_hands_norm.z) * Mathf.Rad2Deg, 0);
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+                    // Produce new wall object
+                    cur_wall = Instantiate(rockwallprefab, wall_pos_min, wall_rot);
+
+                    active_walls += 1;
+                }
+            }
         }
     }
-
 }
 

@@ -10,7 +10,7 @@ public class BallShooting : MonoBehaviour {
     private LineRenderer laserLine;
     public Vector3 hitpoint;
     public GameObject selectedItem;
-    private float range = 100f, speed = 20f;
+    private float range = 100f;
 
     // private float nextFire, trigger, fireRate = .1f;
     // public GameObject[] projectiles;
