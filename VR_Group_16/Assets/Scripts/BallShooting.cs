@@ -40,6 +40,7 @@ public class BallShooting : MonoBehaviour {
         else
         {
             laserLine.SetPosition(1, laserBegin.position + (rayDirection * range));
+            selectedItem = null;
         }
 
         // trigger = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller); ;

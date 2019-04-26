@@ -7,6 +7,10 @@ TagManager:
   - Ground
   - MainPlayer
   - Rock
+  - Waterball
+  - Airball
+  - Fireball
+  - Water
   layers:
   - Default
   - TransparentFX
