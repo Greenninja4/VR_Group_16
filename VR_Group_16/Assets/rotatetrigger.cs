@@ -8,6 +8,13 @@ public class rotatetrigger : MonoBehaviour {
     public GameObject triggerObject;
     public Transform target;
     public GameObject messageCanvas;
+    public GameObject messageCanvas1;
+    public GameObject messageCanvas2;
+
+    public GameObject picture1;
+    public GameObject picture2;
+    public GameObject picture3;
+
     bool triggerornot = true;
 
     void OnTriggerEnter(Collider triggerObject)
@@ -18,6 +25,12 @@ public class rotatetrigger : MonoBehaviour {
             triggerornot = false;
             transform.LookAt(target);
             messageCanvas.SetActive(true);
+            messageCanvas1.SetActive(true);
+            messageCanvas2.SetActive(true);
+
+            picture1.SetActive(true);
+            picture2.SetActive(true);
+            picture3.SetActive(true);
 
         }
     }
