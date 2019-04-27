@@ -7,7 +7,7 @@ public class Eagle : MonoBehaviour {
  public float RotationSpeed;
 
 	void Start () {
-        RotationSpeed = -6.0f;
+        RotationSpeed = -9.0f;
 	}
 	
 	void Update () {
