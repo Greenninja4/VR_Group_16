@@ -25,7 +25,11 @@ GameObject:
   - component: {fileID: 114775041444062720}
   m_Layer: 8
   m_Name: RockBall
+<<<<<<< HEAD
+  m_TagString: Untagged
+=======
   m_TagString: Rock
+>>>>>>> a67519fd435bb410e54b4312ffbb1410988d969e
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
