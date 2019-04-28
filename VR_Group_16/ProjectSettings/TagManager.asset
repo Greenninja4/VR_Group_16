@@ -12,6 +12,7 @@ TagManager:
   - Fireball
   - Water
   - StatusBars
+  - PauseMenu
   layers:
   - Default
   - TransparentFX
