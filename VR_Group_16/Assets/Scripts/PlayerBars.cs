@@ -72,6 +72,7 @@ public class PlayerBars : MonoBehaviour {
     // Omae wa mou shindeiru
     void Death(){
         dead = true;
+        UnityEngine.SceneManagement.SceneManager.LoadScene (sceneName:"Achievements");
     }
 
     // Take a given amount of damage
@@ -83,6 +84,8 @@ public class PlayerBars : MonoBehaviour {
         currentHealth -= amount;
         UpdateHealthBar();
         if (currentHealth <= 0 && !dead){
+            currentHealth = 0;
+            UpdateHealthBar();
             Death();
         }
     }

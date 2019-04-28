@@ -802,7 +802,7 @@ GameObject:
   - component: {fileID: 1402337564}
   m_Layer: 0
   m_Name: Bars
-  m_TagString: Untagged
+  m_TagString: StatusBars
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -818,13 +818,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ba29e4e8e646844448924164c6fce5f8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.092
-  m_Pitch: 1
+  m_Volume: 0.064
+  m_Pitch: 0.64
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 102
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -924,7 +924,7 @@ MonoBehaviour:
   staminaOuterBar: {fileID: 588932573}
   healthInnerBar: {fileID: 1597702656}
   healthOuterBar: {fileID: 1993333133}
-  damageAudio: {fileID: 0}
+  damageAudio: {fileID: 1402337564}
 --- !u!4 &1402337566
 Transform:
   m_ObjectHideFlags: 0
@@ -1193,7 +1193,6 @@ MonoBehaviour:
   - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
   - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
   player: {fileID: 1600524408}
-  statusBars: {fileID: 1402337563}
   staminaRequired: 20
 --- !u!114 &1600524412
 MonoBehaviour:
@@ -1213,7 +1212,6 @@ MonoBehaviour:
   - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
   - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
   player: {fileID: 1600524408}
-  statusBars: {fileID: 1402337563}
   staminaRequired: 20
 --- !u!114 &1600524413
 MonoBehaviour:
@@ -1233,7 +1231,6 @@ MonoBehaviour:
   - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
   - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
   player: {fileID: 1600524408}
-  statusBars: {fileID: 1402337563}
   staminaRequired: 20
 --- !u!114 &1600524414
 MonoBehaviour:
@@ -1253,7 +1250,6 @@ MonoBehaviour:
   - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
   - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
   player: {fileID: 1600524408}
-  statusBars: {fileID: 1402337563}
   staminaRequired: 20
 --- !u!114 &1600524415
 MonoBehaviour:
@@ -1273,7 +1269,6 @@ MonoBehaviour:
   - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
   - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
   player: {fileID: 1600524408}
-  statusBars: {fileID: 1402337563}
   staminaRequired: 20
 --- !u!114 &1600524416
 MonoBehaviour:
@@ -1293,7 +1288,6 @@ MonoBehaviour:
   - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
   - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
   player: {fileID: 1600524408}
-  statusBars: {fileID: 1402337563}
   staminaRequired: 20
 --- !u!114 &1600524417
 MonoBehaviour:
@@ -1313,7 +1307,6 @@ MonoBehaviour:
   - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
   - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
   player: {fileID: 1600524408}
-  statusBars: {fileID: 1402337563}
   staminaRequired: 20
 --- !u!114 &1600524418
 MonoBehaviour:
@@ -1333,7 +1326,6 @@ MonoBehaviour:
   - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
   - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
   player: {fileID: 1600524408}
-  statusBars: {fileID: 1402337563}
   staminaRequired: 20
 --- !u!114 &1600524419
 MonoBehaviour:

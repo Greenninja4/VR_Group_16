@@ -9,7 +9,7 @@ public class AirThrow : MonoBehaviour {
     public GameObject[] projectiles;
     public GameObject player;
     
-    public GameObject statusBars;
+    GameObject statusBars;
 
     //Initialize private elements
     private int elementIndex;
@@ -46,6 +46,9 @@ public class AirThrow : MonoBehaviour {
 
         // Set airball instantiation direction
         forward = new Vector3(0.0f,0.0f,1.0f);
+        
+        // Find status bars
+        statusBars = GameObject.FindGameObjectWithTag("StatusBars");
 	}
 	
 	// Update is called once per frame

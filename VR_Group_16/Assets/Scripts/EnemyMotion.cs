@@ -5,14 +5,17 @@ using UnityEngine;
 
 public class EnemyMotion : MonoBehaviour {
 
+    public float damagePerObject = 20;
+
     Transform player;
+    GameObject statusBars;
 
     
     private float speed = 6f, playerRadius = 2f;
 
-    private void Awake()
-    {
+    private void Awake(){
         player = GameObject.FindGameObjectWithTag("MainPlayer").transform;
+        statusBars = GameObject.FindGameObjectWithTag("StatusBars");
     }
 
     // Use this for initialization
@@ -26,14 +29,14 @@ public class EnemyMotion : MonoBehaviour {
         Vector3 rayDirection = player.transform.position - this.transform.position;
         
         if (Vector3.Distance(player.transform.position, transform.position) >
-            playerRadius)
-        {
+            playerRadius){
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed);
         }
-        else
-        {
+        else{
             // make object disappear
             Destroy(gameObject);
+            // Damage player and update status bars
+            statusBars.GetComponent<PlayerBars>().TakeDamage(damagePerObject);
         }
 	}
 }

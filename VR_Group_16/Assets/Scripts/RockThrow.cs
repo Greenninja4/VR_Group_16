@@ -8,7 +8,7 @@ public class RockThrow : MonoBehaviour {
     public OVRInput.Controller controller;
     public GameObject[] projectiles;
     public GameObject player;
-    public GameObject statusBars;
+    GameObject statusBars;
 
     //Initialize private elements
     private int elementIndex;
@@ -49,6 +49,9 @@ public class RockThrow : MonoBehaviour {
         // Set height of rock instantiation
         above_ground = new Vector3(0.0f, 0.5f, 0.0f);
         forward = new Vector3(0.0f,0.0f,1.0f);
+        
+        // Find status bars
+        statusBars = GameObject.FindGameObjectWithTag("StatusBars");
 	}
 	
 	// Update is called once per frame
