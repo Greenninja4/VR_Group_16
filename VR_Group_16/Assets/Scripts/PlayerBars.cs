@@ -4,9 +4,9 @@ using System.Collections;
 
 public class PlayerBars : MonoBehaviour {
     // Health and stamina values
-    public float maxHealth = 100;
+    public float maxHealth = 1000;
     public float maxStamina = 100;
-    public float currentHealth = 100;
+    public float currentHealth = 1000;
     public float currentStamina = 100;
     public float staminaCooldown = 10;
     public float staminaCooldownDepleted = 3;
@@ -59,14 +59,20 @@ public class PlayerBars : MonoBehaviour {
     void UpdateStaminaBar(){
         float staminaBarRatio = currentStamina / maxStamina;
         Vector3 outer = staminaOuterBar.transform.localScale;
+        Vector3 outer_pos = staminaOuterBar.transform.position;
+        Vector3 inner_pos = staminaInnerBar.transform.position;
         staminaInnerBar.transform.localScale = new Vector3(0.5f * outer.x, 0.9f * outer.y * staminaBarRatio, 0.5f * outer.z);
+        staminaInnerBar.transform.position = new Vector3(outer_pos.x - 0.9f *(1 - staminaBarRatio), inner_pos.y, inner_pos.z);
     }
 
     // Update the health bar gui
     void UpdateHealthBar(){
         float healthBarRatio = currentHealth / maxHealth;
         Vector3 outer = healthOuterBar.transform.localScale;
+        Vector3 outer_pos = healthOuterBar.transform.position;
+        Vector3 inner_pos = healthInnerBar.transform.position;
         healthInnerBar.transform.localScale = new Vector3(0.5f * outer.x, 0.9f * outer.y * healthBarRatio, 0.5f * outer.z);
+        healthInnerBar.transform.position = new Vector3(outer_pos.x - 0.9f *(1 - healthBarRatio), inner_pos.y, inner_pos.z);
     }
 
     // Omae wa mou shindeiru

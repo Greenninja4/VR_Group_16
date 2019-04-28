@@ -23,14 +23,12 @@ public class WaterThrow : MonoBehaviour {
     private Vector3 forward;
     private Quaternion controller_rot;
 
-    //Initialize private constants
-    private float trigger_thresh = 0.5f; //0 to 1, threshold for trigger activation
-    private float nextFire;
-    private float fireRate = 4.0f; //In sec
-    private float float_dist = 2.0f; //End distance (in m) away from hand
-    private float attraction_const = 0.02f; //0 to 1, Larger -> Faster attraction
-    private float thrust_const = 175.0f; //Constant of thrust
-    private int projectileLifetime = 20;
+    //Initialize public constants
+    public float trigger_thresh = 0.5f; //0 to 1, threshold for trigger activation
+    public float float_dist = 2.0f; //End distance (in m) away from hand
+    public float attraction_const = 0.02f; //0 to 1, Larger -> Faster attraction
+    public float thrust_const = 175.0f; //Constant of thrust
+    public int projectileLifetime = 20;
     public float staminaRequired = 20;
 
 
@@ -42,9 +40,6 @@ public class WaterThrow : MonoBehaviour {
 
         // Set waterball to null
         waterball = null;
-
-        // Set initial nextfire time to 0 sec
-        nextFire = 0.0f;
 
         // Set height of waterball instantiation
         above_ground = new Vector3(0.0f, 0.5f, 0.0f);
@@ -82,16 +77,12 @@ public class WaterThrow : MonoBehaviour {
 
                 // If trigger not held, throw waterball
                 else{
-                    // If enough stamina
-                    if (statusBars.GetComponent<PlayerBars>().EnoughStamina()){
+
                         // Launch waterball
                         controller_rot = OVRInput.GetLocalControllerRotation(controller);
                         waterball.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
                         Destroy(waterball, projectileLifetime);
-                        waterball = null;
-                        // Update stamina bars
-                        statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
-                    }
+                        waterball = null; 
                 }
 
             }
@@ -100,7 +91,7 @@ public class WaterThrow : MonoBehaviour {
             else{
 
                  // Instantiate/control waterball if index trigger is held and cooldown period has passed
-                if((OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh)&&(Time.time > nextFire)){
+                if((OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh)&&statusBars.GetComponent<PlayerBars>().EnoughStamina()){
             
                     //Record current selected item
                     selectedItem = this.GetComponent<BallShooting>().selectedItem;
@@ -112,8 +103,8 @@ public class WaterThrow : MonoBehaviour {
                         if(selectedItem.tag == "Water"){
                             waterball = Instantiate(projectiles[elementIndex], this.GetComponent<BallShooting>().hitpoint + above_ground, Quaternion.identity);
 
-                            //Update next firing time
-                            nextFire = Time.time + fireRate;                
+                            // Update stamina bars
+                            statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);               
                         }
 
                         else if(selectedItem.tag == "Waterball"){
@@ -121,8 +112,8 @@ public class WaterThrow : MonoBehaviour {
                             waterball.GetComponent<Rigidbody>().velocity = Vector3.zero;
                             waterball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero; 
 
-                            //Update next firing time
-                            nextFire = Time.time + fireRate;
+                            // Update stamina bars
+                            statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
                         }
                     }
                 }
