@@ -28,7 +28,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - <noninit>: 0
-    - _Exposure: 0.9
+    - _Exposure: 1
     - _Rotation: 0
     m_Colors:
     - <noninit>: {r: 0, g: 9.150861e-35, b: 0, a: 9.150824e-35}
