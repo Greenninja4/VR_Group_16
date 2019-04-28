@@ -1195,7 +1195,7 @@ MonoBehaviour:
   Rcontroller: 2
   leftHandAnchor: {fileID: 1329171234441186}
   rightHandAnchor: {fileID: 1581083808355052}
-  statusBars: {fileID: 0}
+  statusBars: {fileID: 1242053081103112, guid: d48f887a8eccefa4c9809ec9651b8e95, type: 2}
   max_active_walls: 3
   float_dist: 4
   disp_max: 0.8
@@ -1501,7 +1501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaab33b6357c79c459c2c91564c4bf56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 0}
+  pauseMenu: {fileID: 1676104312141572, guid: 1c65df31bb52614488d6baddc3f39c49, type: 2}
   controller: 2
   laserEnd: {fileID: 4362479834223666}
   laserBegin: {fileID: 4550762453801622}
@@ -1529,7 +1529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaab33b6357c79c459c2c91564c4bf56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 0}
+  pauseMenu: {fileID: 1676104312141572, guid: 1c65df31bb52614488d6baddc3f39c49, type: 2}
   controller: 1
   laserEnd: {fileID: 4972134300563888}
   laserBegin: {fileID: 4429464240787112}

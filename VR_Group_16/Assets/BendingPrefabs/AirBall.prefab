@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 135527218284863308}
   - component: {fileID: 114664923665644906}
   - component: {fileID: 54208152801665990}
+  - component: {fileID: 114409331975170840}
   m_Layer: 8
   m_Name: AirBall
   m_TagString: Airball
@@ -101,6 +102,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114409331975170840
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1145152465665164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89dad33ff5fd040489da93ab14d7d845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114664923665644906
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -21,6 +21,18 @@ public class EarthWallCollisions : MonoBehaviour {
         {
             Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
+        else if(collision.gameObject.tag == "Rock"){
+            Destroy(collision.gameObject);
+        }
+        else if(collision.gameObject.tag == "Fireball"){
+            Destroy(collision.gameObject);
+        }
+        else if(collision.gameObject.tag == "Waterball"){
+            Destroy(collision.gameObject);
+        }
+        else if(collision.gameObject.tag == "Airball"){
+            Destroy(collision.gameObject);
+        }
     }
 
 }
