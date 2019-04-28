@@ -48,7 +48,7 @@ public class Pause : MonoBehaviour {
         }
         // Main Menu button
         if(selectedItem.name == "MainMenu"){
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"MainMenu");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"Startmenu");
         }
         // Achievements button
         if(selectedItem.name == "Achievements"){
