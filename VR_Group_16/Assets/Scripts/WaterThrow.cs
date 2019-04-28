@@ -8,6 +8,7 @@ public class WaterThrow : MonoBehaviour {
     public OVRInput.Controller controller;
     public GameObject[] projectiles;
     public GameObject player;
+    public GameObject statusBars;
 
     //Initialize private elements
     private int elementIndex;
@@ -30,6 +31,7 @@ public class WaterThrow : MonoBehaviour {
     private float attraction_const = 0.02f; //0 to 1, Larger -> Faster attraction
     private float thrust_const = 175.0f; //Constant of thrust
     private int projectileLifetime = 20;
+    public float staminaRequired = 20;
 
 
 
@@ -77,11 +79,16 @@ public class WaterThrow : MonoBehaviour {
 
                 // If trigger not held, throw waterball
                 else{
-                    // Launch waterball
-                    controller_rot = OVRInput.GetLocalControllerRotation(controller);
-                    waterball.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
-                    Destroy(waterball, projectileLifetime);
-                    waterball = null;
+                    // If enough stamina
+                    if (statusBars.GetComponent<PlayerBars>().EnoughStamina()){
+                        // Launch waterball
+                        controller_rot = OVRInput.GetLocalControllerRotation(controller);
+                        waterball.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
+                        Destroy(waterball, projectileLifetime);
+                        waterball = null;
+                        // Update stamina bars
+                        statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+                    }
                 }
 
             }

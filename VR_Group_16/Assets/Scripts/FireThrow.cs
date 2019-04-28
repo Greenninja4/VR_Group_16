@@ -8,6 +8,7 @@ public class FireThrow : MonoBehaviour {
     public OVRInput.Controller controller;
     public GameObject[] projectiles;
     public GameObject player;
+    public GameObject statusBars;
 
     //Initialize private elements
     private int elementIndex;
@@ -27,6 +28,7 @@ public class FireThrow : MonoBehaviour {
     private float float_dist = 2.0f; //End distance (in m) away from hand
     private float thrust_const = 175.0f; //Constant of thrust
     private int projectileLifetime = 20;
+    public float staminaRequired = 20;
 
 
 
@@ -72,11 +74,16 @@ public class FireThrow : MonoBehaviour {
 
                 // If trigger not held, throw fireball
                 else{
-                    // Launch fireball
-                    controller_rot = OVRInput.GetLocalControllerRotation(controller);
-                    fireball.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
-                    Destroy(fireball, projectileLifetime);
-                    fireball = null;
+                    // If enough stamina
+                    if (statusBars.GetComponent<PlayerBars>().EnoughStamina()){
+                        // Launch fireball
+                        controller_rot = OVRInput.GetLocalControllerRotation(controller);
+                        fireball.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
+                        Destroy(fireball, projectileLifetime);
+                        fireball = null;
+                        // Update stamina bars
+                        statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+                    }
                 }
 
             }

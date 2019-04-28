@@ -8,6 +8,7 @@ public class RockThrow : MonoBehaviour {
     public OVRInput.Controller controller;
     public GameObject[] projectiles;
     public GameObject player;
+    public GameObject statusBars;
 
     //Initialize private elements
     private int elementIndex;
@@ -30,6 +31,7 @@ public class RockThrow : MonoBehaviour {
     private float attraction_const = 0.02f; //0 to 1, Larger -> Faster attraction
     private float thrust_const = 175.0f; //Constant of thrust
     private int projectileLifetime = 20;
+    public float staminaRequired = 20;
 
 
 
@@ -77,13 +79,17 @@ public class RockThrow : MonoBehaviour {
 
                 // If trigger not held, throw rock
                 else{
-                    // Launch rock
-                    controller_rot = OVRInput.GetLocalControllerRotation(controller);
-                    rock.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
-                    Destroy(rock, projectileLifetime);
-                    rock = null;
+                    // If enough stamina
+                    if (statusBars.GetComponent<PlayerBars>().EnoughStamina()){
+                        // Launch rock
+                        controller_rot = OVRInput.GetLocalControllerRotation(controller);
+                        rock.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
+                        Destroy(rock, projectileLifetime);
+                        rock = null;
+                        // Update stamina bars
+                        statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+                    }
                 }
-
             }
 
             //If rock is not held, check trigger

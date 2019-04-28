@@ -8,6 +8,8 @@ public class AirThrow : MonoBehaviour {
     public OVRInput.Controller controller;
     public GameObject[] projectiles;
     public GameObject player;
+    
+    public GameObject statusBars;
 
     //Initialize private elements
     private int elementIndex;
@@ -27,6 +29,7 @@ public class AirThrow : MonoBehaviour {
     private float float_dist = 2.0f; //End distance (in m) away from hand
     private float thrust_const = 175.0f; //Constant of thrust
     private int projectileLifetime = 20;
+    public float staminaRequired = 20;
 
 
 
@@ -72,11 +75,16 @@ public class AirThrow : MonoBehaviour {
 
                 // If trigger not held, throw airball
                 else{
-                    // Launch airball
-                    controller_rot = OVRInput.GetLocalControllerRotation(controller);
-                    airball.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
-                    Destroy(airball, projectileLifetime);
-                    airball = null;
+                    // If enough stamina
+                    if (statusBars.GetComponent<PlayerBars>().EnoughStamina()){
+                        // Launch airball
+                        controller_rot = OVRInput.GetLocalControllerRotation(controller);
+                        airball.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
+                        Destroy(airball, projectileLifetime);
+                        airball = null;
+                        // Update stamina bars
+                        statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+                    }
                 }
 
             }
