@@ -195,7 +195,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1242053081103112}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -2.84, y: 2.74, z: -5.52}
+  m_LocalPosition: {x: 0.34, y: 3.45, z: -7.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4080466321037854}
@@ -594,7 +594,7 @@ MonoBehaviour:
   maxHealth: 100
   maxStamina: 100
   currentHealth: 100
-  currentStamina: 0
+  currentStamina: 30
   staminaCooldown: 30
   staminaCooldownDepleted: 5
   tiredTimeStamp: 0
@@ -611,7 +611,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1368517692658508}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -624,7 +624,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1618203158661392}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -637,7 +637,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1863810885140778}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -650,7 +650,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1386029048854320}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1

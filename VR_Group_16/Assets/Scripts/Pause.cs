@@ -53,8 +53,8 @@ public class Pause : MonoBehaviour {
         }
         // Achievements button
         if(selectedItem.name == "Achievements"){
-            ResumeGame();
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"Achievements");
+            // ResumeGame();
+            // UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"Achievements");
         }
         // Quit button
         if(selectedItem.name == "Quit"){
