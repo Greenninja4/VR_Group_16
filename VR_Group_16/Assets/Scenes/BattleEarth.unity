@@ -252,7 +252,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 1922013312114606, guid: 736e016f30656d448a7896738f07b210, type: 2}
   - {fileID: 1618947771414310, guid: fcd3146c827920041b41f5db30c33058, type: 2}
-  - {fileID: 1272952387971198, guid: e39e6c4ffa3ddff40be2b3c3624d6508, type: 2}
+  - {fileID: 1272952387971198, guid: 6b7685ab7a092ed468d29a5f6262d9bc, type: 2}
   - {fileID: 1090672891181166, guid: 4f5c54a6ec34a754d967e95ba52b217d, type: 2}
   spawnTime: 3
   spawnPoints:
