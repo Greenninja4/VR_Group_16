@@ -8,8 +8,8 @@ public class PlayerBars : MonoBehaviour {
     public float maxStamina = 100;
     public float currentHealth = 1000;
     public float currentStamina = 100;
-    public float staminaCooldown = 10;
-    public float staminaCooldownDepleted = 3;
+    private float staminaCooldown = 10;
+    private float staminaCooldownDepleted = 1;
     public float tiredTimeStamp;
 
     // State variables

@@ -23,7 +23,7 @@ public class ObjectCollisions : MonoBehaviour {
         }
 
         else if(this.tag == "Airball"){
-            if (collision.gameObject.tag == "Waterball")
+            if (collision.gameObject.tag == "Rock")
                 Destroy(collision.gameObject);
         }
 
@@ -33,7 +33,7 @@ public class ObjectCollisions : MonoBehaviour {
         }
 
         else if(this.tag == "Fireball"){
-            if (collision.gameObject.tag == "Rock")
+            if (collision.gameObject.tag == "Waterball")
                 Destroy(collision.gameObject);
         }
     }

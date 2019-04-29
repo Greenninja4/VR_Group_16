@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour {
 
     public GameObject[] enemies;
-    public float spawnTime = 3f;
+    private float spawnTime = 4f;
     public Transform[] spawnPoints;
 
 	// Use this for initialization
