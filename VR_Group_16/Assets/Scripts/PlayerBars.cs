@@ -78,7 +78,7 @@ public class PlayerBars : MonoBehaviour {
     // Omae wa mou shindeiru
     void Death(){
         dead = true;
-        UnityEngine.SceneManagement.SceneManager.LoadScene (sceneName:"GameoverScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene (sceneName:"GameOver");
     }
 
     // Take a given amount of damage
