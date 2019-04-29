@@ -48,10 +48,12 @@ public class Pause : MonoBehaviour {
         }
         // Main Menu button
         if(selectedItem.name == "MainMenu"){
+            ResumeGame();
             UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"Startmenu");
         }
         // Achievements button
         if(selectedItem.name == "Achievements"){
+            ResumeGame();
             UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"Achievements");
         }
         // Quit button

@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/BattleEarth.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/BattleMechanics.unity
@@ -32,4 +32,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameoverScene.unity
     guid: 2d15fd38a1b9c5441abdd060d91cb869
+  - enabled: 1
+    path: Assets/Scenes/BattleWater.unity
+    guid: 665e0d8d64177c043af775dc4388acd8
+  - enabled: 1
+    path: Assets/Scenes/ExploreWater.unity
+    guid: 805e117f6f22b1b4d9acdd989b8d3cac
+  - enabled: 1
+    path: Assets/Scenes/ExploreEarth.unity
+    guid: 3545311694b98ed45b9120ad72e7e9ec
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 2bc4084c663cd9b4fad12cee6920e62d
   m_configObjects: {}
