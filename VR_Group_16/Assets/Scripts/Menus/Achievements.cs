@@ -80,8 +80,9 @@ public class Achievements : MonoBehaviour
 
     private Dictionary<string, string> currentMenuText;
     private string[] currentMenuOptions;
-    private GameObject field;
-    private string curr_submenu;
+    private GameObject field; //entry on a paritcular submenu
+    private string curr_submenu; //name of current window
+    private GameObject visibleMenu; //gameObject of current submenu
 
 
     // Use this for initialization
@@ -116,23 +117,59 @@ public class Achievements : MonoBehaviour
             //currentMenuText is dictionary where each key is a submenu 
             //and each value is the text that should populate that field
             this.currentMenuText = menuText[key];
+            //currentMenuText is 
             foreach (string menuOption in currentMenuText.Keys)
             {
                 //submenu->menu option
                 this.field = this.submenus[key].transform.Find(menuOption).gameObject;
-                Debug.Log(this.field);
                 //menu option -> canvas -> text
                 this.field.transform.Find("Canvas").transform.Find("Text").GetComponent<Text>().text = currentMenuText[menuOption];
             }
         }
 
-        clickHandle(submenus["FireMenu"]);
+        clickHandle(submenus["TopMenu"]);
     }
 
     // Update is called once per frame
     void Update()
     {
+        this.visibleMenu = submenus[curr_submenu]; // gameObject for editting
+        this.currentMenuText = menuText[curr_submenu]; //dictionary<string, string> with each field label and value
+        foreach (string menuOption in currentMenuText.Keys)
+        {
+            //submenu->menu option
+            this.field = this.visibleMenu.transform.Find(menuOption).gameObject;
 
+
+            //generate text
+            string fieldText;
+            string playerField; ;
+            switch (menuOption)
+            {
+                case "Time":
+                    playerField = curr_submenu + "Time";
+                    fieldText = currentMenuText[menuOption] + PlayerPrefs.GetFloat(playerField);
+                    break;
+                case "Shots":
+                    playerField = curr_submenu + "Shots";
+                    fieldText = currentMenuText[menuOption] + PlayerPrefs.GetInt(playerField);
+                    break;
+                case "Hits":
+                    playerField = curr_submenu + "Hits";
+                    fieldText = currentMenuText[menuOption] + PlayerPrefs.GetInt(playerField);
+                    break;
+                case "Accuracy":
+                    playerField = curr_submenu + "Shots";
+                    int shots = PlayerPrefs.GetInt(playerField);
+                    playerField = curr_submenu + "Hits";
+                    int hits = PlayerPrefs.GetInt(playerField);
+                    float accuracy = hits/shots;
+                    fieldText = currentMenuText[menuOption] + accuracy.ToString("0.0") + "%";
+                    break;
+
+            }
+         
+        }
     }
 
     public void clickHandle(GameObject selectedItem)

@@ -17,8 +17,19 @@ public class BallShooting : MonoBehaviour {
     public int elementIndex = 0;
     // private int projectileLifetime = 20;
 
+    //Reference to battle gameobject for function calls (updating play time)
+    private GameObject battle;
+
+    private static Dictionary<int, string> elementIDs = new Dictionary<int, string>()
+    {
+        {0,"Air"},
+        {1,"Water"},
+        {2,"Earth"},
+        {3,"Fire"}
+    };
 
     void Start () {
+        battle = this.transform.root.gameObject;
         laserLine = GetComponent<LineRenderer>();
         laserLine.material.color = Color.yellow;
     }
@@ -109,8 +120,7 @@ public class BallShooting : MonoBehaviour {
                     break;
             }
         }
-
-
+        battle.GetComponent<AchievementTracking>().playTime(elementIDs[elementIndex], Time.deltaTime);
     }
 
 }

@@ -31,10 +31,13 @@ public class RockThrow : MonoBehaviour {
     public int projectileLifetime = 20;
     public float staminaRequired = 20;
 
+    private GameObject battle;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
+        battle = this.transform.root.gameObject;
+
         // Get left and right hand game objects
         trackingSpace = player.transform.Find("OVRCameraRig").gameObject.transform.Find("TrackingSpace").gameObject;
 
@@ -100,7 +103,7 @@ public class RockThrow : MonoBehaviour {
                         // If controller pointed at ground, produce new object
                         if(selectedItem.tag == "Ground"){
                             rock = Instantiate(projectiles[elementIndex], this.GetComponent<BallShooting>().hitpoint + above_ground, Quaternion.identity);
-
+                            battle.GetComponent<AchievementTracking>().Shot("Rock");
                             // Update stamina bars
                             statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);                
                         }

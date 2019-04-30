@@ -29,10 +29,15 @@ public class AirThrow : MonoBehaviour {
     public int projectileLifetime = 20;
     public float staminaRequired = 20;
 
+    private GameObject battle;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
+        battle = this.transform.root.gameObject;
+        Debug.Log(battle.name);
+
+
         // Get left and right hand game objects
         trackingSpace = player.transform.Find("OVRCameraRig").gameObject.transform.Find("TrackingSpace").gameObject;
 
@@ -107,6 +112,7 @@ public class AirThrow : MonoBehaviour {
                         controller_rot = OVRInput.GetLocalControllerRotation(controller);
                         end_pos = controller_pos + controller_rot*forward*float_dist + trackingSpace.transform.position;
                         airball = Instantiate(projectiles[elementIndex], end_pos, Quaternion.identity);
+                        battle.GetComponent<AchievementTracking>().Shot("Airball");
 
                         // Update stamina bars
                         statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);              
