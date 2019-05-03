@@ -24,6 +24,7 @@ public class MainMenu : MonoBehaviour {
 	void Start () {
         // Ray cast initialization
         laserLine = GetComponent<LineRenderer>();
+        laserLine.material.color = Color.black;
         // Deactivate battle and explore menus
         battleMenu.SetActive(false);
         exploreMenu.SetActive(false);

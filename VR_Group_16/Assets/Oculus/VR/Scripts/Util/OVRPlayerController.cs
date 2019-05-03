@@ -426,7 +426,7 @@ public class OVRPlayerController : MonoBehaviour
 				{
 					if (ReadyToSnapTurn)
 					{
-						euler.y -= RotationRatchet;
+						//euler.y -= RotationRatchet;
 						ReadyToSnapTurn = false;
 					}
 				}
@@ -435,7 +435,7 @@ public class OVRPlayerController : MonoBehaviour
 				{
 					if (ReadyToSnapTurn)
 					{
-						euler.y += RotationRatchet;
+						//euler.y += RotationRatchet;
 						ReadyToSnapTurn = false;
 					}
 				}

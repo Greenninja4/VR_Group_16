@@ -23,6 +23,7 @@ public class AchievementsMenu : MonoBehaviour {
 	void Start () {
         // Ray cast initialization
         laserLine = GetComponent<LineRenderer>();
+        laserLine.material.color = Color.black;
 	}
 	
 	// Update is called once per frame
