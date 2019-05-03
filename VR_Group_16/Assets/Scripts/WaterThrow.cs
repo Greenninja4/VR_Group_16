@@ -34,7 +34,8 @@ public class WaterThrow : MonoBehaviour {
     private float vibe_time_remaining;
 
     private GameObject battle;
-
+    private bool isPaused = false;
+    public GameObject mainPlayer;
 
     // Use this for initialization
     void Start () {
@@ -52,86 +53,105 @@ public class WaterThrow : MonoBehaviour {
 
         // Find status bars
         statusBars = GameObject.FindGameObjectWithTag("StatusBars");
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if(vibe_time_remaining > 0){
-            vibe_time_remaining -= Time.deltaTime;
-            OVRInput.SetControllerVibration(0.6f,0.5f, controller);
-        }
-        else{
-            OVRInput.SetControllerVibration(0,0,controller);
-        }
+        mainPlayer = GameObject.FindGameObjectWithTag("MainPlayer");
 
-        //Record current element index of hand
-        elementIndex = this.GetComponent<BallShooting>().elementIndex;
+    }
 
-        //If Water is current element in hand
-        if(elementIndex == 1){
+    // Update is called once per frame
+    void Update () {
 
-            //If waterball is held, check trigger
-            if(waterball != null){
+        isPaused = mainPlayer.GetComponent<Pause>().paused;
 
-                if(OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh){
+        if (!isPaused)
+        {
+            if (vibe_time_remaining > 0)
+            {
+                vibe_time_remaining -= Time.deltaTime;
+                OVRInput.SetControllerVibration(0.6f, 0.5f, controller);
+            }
+            else
+            {
+                OVRInput.SetControllerVibration(0, 0, controller);
+            }
 
-                    //Calculate expected end position of waterball
-                    controller_pos = OVRInput.GetLocalControllerPosition(controller);
-                    controller_rot = OVRInput.GetLocalControllerRotation(controller);
+            //Record current element index of hand
+            elementIndex = this.GetComponent<BallShooting>().elementIndex;
 
-                    //Record expected end position of waterball
-                    end_pos = controller_pos + controller_rot*forward*float_dist + trackingSpace.transform.position;
+            //If Water is current element in hand
+            if (elementIndex == 1)
+            {
 
-                    // Bring waterball a fraction closer to expected position each update
-                    vec_to_pos = end_pos - waterball.transform.position;
-                    waterball.transform.position += vec_to_pos*attraction_const;            
-                }
+                //If waterball is held, check trigger
+                if (waterball != null)
+                {
 
-                // If trigger not held, throw waterball
-                else{
+                    if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh)
+                    {
+
+                        //Calculate expected end position of waterball
+                        controller_pos = OVRInput.GetLocalControllerPosition(controller);
+                        controller_rot = OVRInput.GetLocalControllerRotation(controller);
+
+                        //Record expected end position of waterball
+                        end_pos = controller_pos + controller_rot * forward * float_dist + trackingSpace.transform.position;
+
+                        // Bring waterball a fraction closer to expected position each update
+                        vec_to_pos = end_pos - waterball.transform.position;
+                        waterball.transform.position += vec_to_pos * attraction_const;
+                    }
+
+                    // If trigger not held, throw waterball
+                    else
+                    {
 
                         // Launch waterball
                         controller_rot = OVRInput.GetLocalControllerRotation(controller);
-                        waterball.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
+                        waterball.GetComponent<Rigidbody>().AddForce(controller_rot * forward * thrust_const);
                         Destroy(waterball, projectileLifetime);
                         vibe_time_remaining = vibe_time;
-                        waterball = null; 
+                        waterball = null;
+                    }
+
                 }
 
-            }
+                //If waterball is not held, check trigger
+                else
+                {
 
-            //If waterball is not held, check trigger
-            else{
+                    // Instantiate/control waterball if index trigger is held and cooldown period has passed
+                    if ((OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh) && statusBars.GetComponent<PlayerBars>().EnoughStamina(staminaRequired))
+                    {
 
-                 // Instantiate/control waterball if index trigger is held and cooldown period has passed
-                if((OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh)&&statusBars.GetComponent<PlayerBars>().EnoughStamina(staminaRequired)){
-            
-                    //Record current selected item
-                    selectedItem = this.GetComponent<BallShooting>().selectedItem;
-                    
-                    // If selected item is not null
-                    if(selectedItem != null){
+                        //Record current selected item
+                        selectedItem = this.GetComponent<BallShooting>().selectedItem;
 
-                        // If controller pointed at ground, produce new object
-                        if(selectedItem.tag == "Water"){
-                            waterball = Instantiate(projectiles[elementIndex], this.GetComponent<BallShooting>().hitpoint + above_ground, Quaternion.identity);
-                            battle.GetComponent<AchievementTracking>().Shot("Waterball");
+                        // If selected item is not null
+                        if (selectedItem != null)
+                        {
 
-                            // Update stamina bars
-                            statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);         
+                            // If controller pointed at ground, produce new object
+                            if (selectedItem.tag == "Water")
+                            {
+                                waterball = Instantiate(projectiles[elementIndex], this.GetComponent<BallShooting>().hitpoint + above_ground, Quaternion.identity);
+                                battle.GetComponent<AchievementTracking>().Shot("Waterball");
 
-                            vibe_time_remaining = vibe_time;      
-                        }
+                                // Update stamina bars
+                                statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
 
-                        else if(selectedItem.tag == "Waterball"){
-                            waterball = selectedItem;
-                            waterball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                            waterball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero; 
+                                vibe_time_remaining = vibe_time;
+                            }
 
-                            // Update stamina bars
-                            statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+                            else if (selectedItem.tag == "Waterball")
+                            {
+                                waterball = selectedItem;
+                                waterball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                                waterball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
-                            vibe_time_remaining = vibe_time;
+                                // Update stamina bars
+                                statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+
+                                vibe_time_remaining = vibe_time;
+                            }
                         }
                     }
                 }

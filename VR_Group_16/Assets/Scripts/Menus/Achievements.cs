@@ -180,9 +180,9 @@ public class Achievements : MonoBehaviour
                     int shots = PlayerPrefs.GetInt(playerField, 1);
                     playerField = curr_submenu + "Hits";
                     int hits = PlayerPrefs.GetInt(playerField, 0);
-                    float accuracy = hits/shots;
-                    accuracy /= 60;
-                    fieldText = currentMenuText[menuOption] + accuracy.ToString("0.0") + "%";
+                    float accuracy = (float)hits/shots;
+                    accuracy *= 100;
+                    fieldText = currentMenuText[menuOption] + accuracy.ToString("0.00") + "%";
                     this.field.transform.Find("Canvas").transform.Find("Text").GetComponent<Text>().text = fieldText;
 
                     break;

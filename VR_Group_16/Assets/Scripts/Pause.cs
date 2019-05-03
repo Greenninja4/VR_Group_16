@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pause : MonoBehaviour {
 
     // Status variable & menu object
-    private bool paused;
+    public bool paused;
     public GameObject player, centerEye;
     public GameObject pauseMenu;
     // Ray cast controller

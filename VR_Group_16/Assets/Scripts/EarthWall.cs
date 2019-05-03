@@ -5,7 +5,7 @@ using UnityEngine;
 public class EarthWall : MonoBehaviour
 {
     // Initialize external public elements
-    public GameObject player;
+    public GameObject player, mainPlayer;
     public GameObject centerEye;
     public GameObject rockwallprefab;
     public OVRInput.Controller Lcontroller;
@@ -38,6 +38,7 @@ public class EarthWall : MonoBehaviour
     public float vibe_time = 0.5f; //Seconds on the vibration
 
     private float[] timers; // Set timers to know how many walls are still active
+    private bool isPaused = false;
 
 
     // Use this for initialization
@@ -54,110 +55,129 @@ public class EarthWall : MonoBehaviour
 
         // Find status bars
         statusBars = GameObject.FindGameObjectWithTag("StatusBars");
+        mainPlayer = GameObject.FindGameObjectWithTag("MainPlayer");
     }
 
     //Update is called once per frame
     void Update(){
-        if(vibe_time_remaining >= vibe_time){
-            OVRInput.SetControllerVibration(0.1f,0.5f, Lcontroller);
-            OVRInput.SetControllerVibration(0.1f,0.5f, Rcontroller); 
-        }
-        else{
-            OVRInput.SetControllerVibration(0,0,Lcontroller);
-            OVRInput.SetControllerVibration(0,0,Rcontroller);
-        }
 
-        // Record current element index of each hand
-        elementIndexL = leftHandAnchor.GetComponent<BallShooting>().elementIndex;
-        elementIndexR = rightHandAnchor.GetComponent<BallShooting>().elementIndex;
-
-        // Update number of active walls using timer array
-        active_walls = 0;
-        for (int i = 0;i<max_active_walls;i++){
-            timers[i] -= Time.deltaTime;
-            if (timers[i] > 0.0f){
-                active_walls += 1;
+        isPaused = mainPlayer.GetComponent<Pause>().paused;
+        if (!isPaused)
+        {
+            if (vibe_time_remaining >= vibe_time)
+            {
+                OVRInput.SetControllerVibration(0.1f, 0.5f, Lcontroller);
+                OVRInput.SetControllerVibration(0.1f, 0.5f, Rcontroller);
             }
-        }
-
-        // If Earth is current element for both hands
-        if ((elementIndexL == 0)&&(elementIndexR == 0)){
-
-            // If a wall is currently being held
-            if(cur_wall != null){
-
-                // Wall position goes to below ground, in front of player
-                avg_hands = (OVRInput.GetLocalControllerPosition(Lcontroller)
-                        + OVRInput.GetLocalControllerPosition(Rcontroller)) / 2;
-                
-                //Don't change wall x,z coordinates, nor rotation, but adjust height
-                disp = avg_hands.y - hand_init_height;
-                
-                // If hands above max height, set wall to max height
-                if(disp > disp_max){
-                    cur_wall.transform.position = new Vector3(cur_wall.transform.position.x, wall_pos_min.y+rockwallprefab.transform.localScale.y, cur_wall.transform.position.z);
-                }
-
-                // Else if hands above min height, set wall to proportionate height
-                else if(disp > 0.0f){
-                    cur_wall.transform.position = new Vector3(cur_wall.transform.position.x, ((disp / disp_max)-0.5f) * rockwallprefab.transform.localScale.y + pos_y_const, cur_wall.transform.position.z);
-                }
-
-                else{
-                    cur_wall.transform.position = new Vector3(cur_wall.transform.position.x, wall_pos_min.y, cur_wall.transform.position.z);
-                }
-
-                // Maintain same rotation
-                cur_wall.transform.rotation = wall_rot;
-
-                // If triggers not held anymore, set wall to current position/rotation
-                if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Lcontroller) <= 0.5 
-                && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Rcontroller) <= 0.5){
-                    
-                    Destroy(cur_wall, wallLifetime);
-                    cur_wall = null;
-                    timers[rotating_timer_cnt] = wallLifetime;
-                    vibe_time_remaining = 0.0f; 
-                    rotating_timer_cnt = (rotating_timer_cnt+1) % max_active_walls;
-                }
+            else
+            {
+                OVRInput.SetControllerVibration(0, 0, Lcontroller);
+                OVRInput.SetControllerVibration(0, 0, Rcontroller);
             }
 
-            // Else if no wall being held, check if new wall can be built
-            else if (active_walls < max_active_walls){
+            // Record current element index of each hand
+            elementIndexL = leftHandAnchor.GetComponent<BallShooting>().elementIndex;
+            elementIndexR = rightHandAnchor.GetComponent<BallShooting>().elementIndex;
 
-                // If triggers held, build new wall
-                if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Lcontroller) > 0.5 
-                && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Rcontroller) > 0.5
-                && statusBars.GetComponent<PlayerBars>().EnoughStamina(staminaRequired)){
-
-
-                    // Find average hand position when activated
-                    avg_hands = (OVRInput.GetLocalControllerPosition(Lcontroller)
-                            + OVRInput.GetLocalControllerPosition(Rcontroller)) / 2;
-
-                    // Set wall position float_dist in front of player's hands (relative to headset)
-                    hand_init_height = avg_hands.y;
-                    avg_hands_norm = avg_hands + player.transform.position - centerEye.transform.position;
-                    avg_hands_norm.y = 0.0f;
-                    avg_hands_norm = avg_hands_norm.normalized;
-                    wall_pos_min =  centerEye.transform.position + float_dist * (avg_hands_norm);
-                    wall_pos_min.y = pos_y_const - rockwallprefab.transform.localScale.y/2;
-
-                    // Set wall rotation such that it starts normal to player
-                    wall_rot = Quaternion.Euler(0, Mathf.Atan2(avg_hands_norm.x,avg_hands_norm.z) * Mathf.Rad2Deg, 0);
-
-                    // Produce new wall object
-                    cur_wall = Instantiate(rockwallprefab, wall_pos_min, wall_rot);
-
-                    vibe_time_remaining = vibe_time; 
-
-                    // Update stamina bars
-                    statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
-
+            // Update number of active walls using timer array
+            active_walls = 0;
+            for (int i = 0; i < max_active_walls; i++)
+            {
+                timers[i] -= Time.deltaTime;
+                if (timers[i] > 0.0f)
+                {
                     active_walls += 1;
                 }
             }
+
+            // If Earth is current element for both hands
+            if ((elementIndexL == 0) && (elementIndexR == 0))
+            {
+
+                // If a wall is currently being held
+                if (cur_wall != null)
+                {
+
+                    // Wall position goes to below ground, in front of player
+                    avg_hands = (OVRInput.GetLocalControllerPosition(Lcontroller)
+                            + OVRInput.GetLocalControllerPosition(Rcontroller)) / 2;
+
+                    //Don't change wall x,z coordinates, nor rotation, but adjust height
+                    disp = avg_hands.y - hand_init_height;
+
+                    // If hands above max height, set wall to max height
+                    if (disp > disp_max)
+                    {
+                        cur_wall.transform.position = new Vector3(cur_wall.transform.position.x, wall_pos_min.y + rockwallprefab.transform.localScale.y, cur_wall.transform.position.z);
+                    }
+
+                    // Else if hands above min height, set wall to proportionate height
+                    else if (disp > 0.0f)
+                    {
+                        cur_wall.transform.position = new Vector3(cur_wall.transform.position.x, ((disp / disp_max) - 0.5f) * rockwallprefab.transform.localScale.y + pos_y_const, cur_wall.transform.position.z);
+                    }
+
+                    else
+                    {
+                        cur_wall.transform.position = new Vector3(cur_wall.transform.position.x, wall_pos_min.y, cur_wall.transform.position.z);
+                    }
+
+                    // Maintain same rotation
+                    cur_wall.transform.rotation = wall_rot;
+
+                    // If triggers not held anymore, set wall to current position/rotation
+                    if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Lcontroller) <= 0.5
+                    && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Rcontroller) <= 0.5)
+                    {
+
+                        Destroy(cur_wall, wallLifetime);
+                        cur_wall = null;
+                        timers[rotating_timer_cnt] = wallLifetime;
+                        vibe_time_remaining = 0.0f;
+                        rotating_timer_cnt = (rotating_timer_cnt + 1) % max_active_walls;
+                    }
+                }
+
+                // Else if no wall being held, check if new wall can be built
+                else if (active_walls < max_active_walls)
+                {
+
+                    // If triggers held, build new wall
+                    if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Lcontroller) > 0.5
+                    && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Rcontroller) > 0.5
+                    && statusBars.GetComponent<PlayerBars>().EnoughStamina(staminaRequired))
+                    {
+
+
+                        // Find average hand position when activated
+                        avg_hands = (OVRInput.GetLocalControllerPosition(Lcontroller)
+                                + OVRInput.GetLocalControllerPosition(Rcontroller)) / 2;
+
+                        // Set wall position float_dist in front of player's hands (relative to headset)
+                        hand_init_height = avg_hands.y;
+                        avg_hands_norm = avg_hands + player.transform.position - centerEye.transform.position;
+                        avg_hands_norm.y = 0.0f;
+                        avg_hands_norm = avg_hands_norm.normalized;
+                        wall_pos_min = centerEye.transform.position + float_dist * (avg_hands_norm);
+                        wall_pos_min.y = pos_y_const - rockwallprefab.transform.localScale.y / 2;
+
+                        // Set wall rotation such that it starts normal to player
+                        wall_rot = Quaternion.Euler(0, Mathf.Atan2(avg_hands_norm.x, avg_hands_norm.z) * Mathf.Rad2Deg, 0);
+
+                        // Produce new wall object
+                        cur_wall = Instantiate(rockwallprefab, wall_pos_min, wall_rot);
+
+                        vibe_time_remaining = vibe_time;
+
+                        // Update stamina bars
+                        statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+
+                        active_walls += 1;
+                    }
+                }
+            }
         }
+
     }
 }
 

@@ -30,8 +30,10 @@ public class AirThrow : MonoBehaviour {
     public float staminaRequired = 20;
     public float vibe_time = 0.2f; //Seconds on the vibration
     private float vibe_time_remaining;
+    private bool isPaused = false;
 
     private GameObject battle;
+    public GameObject mainPlayer;
 
 
     // Use this for initialization
@@ -51,89 +53,108 @@ public class AirThrow : MonoBehaviour {
         
         // Find status bars
         statusBars = GameObject.FindGameObjectWithTag("StatusBars");
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if(vibe_time_remaining > 0){
-            vibe_time_remaining -= Time.deltaTime;
-            OVRInput.SetControllerVibration(0.6f,0.5f, controller);
-        }
-        else{
-            OVRInput.SetControllerVibration(0,0,controller);
-        }
+        mainPlayer = GameObject.FindGameObjectWithTag("MainPlayer");
 
-        //Record current element index of hand
-        elementIndex = this.GetComponent<BallShooting>().elementIndex;
+    }
 
-        //If Air is current element in hand
-        if(elementIndex == 2){
+    // Update is called once per frame
+    void Update () {
 
-            //If airball is held, check trigger
-            if(airball != null){
+        isPaused = mainPlayer.GetComponent<Pause>().paused;
 
-                if(OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh){
-
-                    //Calculate expected end position of airball
-                    controller_pos = OVRInput.GetLocalControllerPosition(controller);
-                    controller_rot = OVRInput.GetLocalControllerRotation(controller);
-
-                    //Record expected end position of airball
-                    end_pos = controller_pos + controller_rot*forward*float_dist + trackingSpace.transform.position;
-
-                    // Bring airball to expected position each update
-                    airball.transform.position = end_pos;            
-                }
-
-                // If trigger not held, throw airball
-                else{
-
-                    // Launch airball
-                    controller_rot = OVRInput.GetLocalControllerRotation(controller);
-                    airball.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
-                    vibe_time_remaining = vibe_time; 
-                    Destroy(airball, projectileLifetime);
-                    airball = null;
-                }
+        if (!isPaused) {
+            if (vibe_time_remaining > 0)
+            {
+                vibe_time_remaining -= Time.deltaTime;
+                OVRInput.SetControllerVibration(0.6f, 0.5f, controller);
+            }
+            else
+            {
+                OVRInput.SetControllerVibration(0, 0, controller);
             }
 
-            //If airball is not held, check trigger
-            else{
+            //Record current element index of hand
+            elementIndex = this.GetComponent<BallShooting>().elementIndex;
 
-                 // Instantiate/control airball if index trigger is held and cooldown period has passed
-                if((OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh)&&statusBars.GetComponent<PlayerBars>().EnoughStamina(staminaRequired)){
-            
-                    //Record current selected item
-                    selectedItem = this.GetComponent<BallShooting>().selectedItem;
-                    
-                    // If selected item is not null
-                    if((selectedItem != null)&&(selectedItem.tag == "Airball")){
-                        airball = selectedItem;
-                        airball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                        airball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero; 
+            //If Air is current element in hand
+            if (elementIndex == 2)
+            {
 
-                        // Update stamina bars
-                        statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+                //If airball is held, check trigger
+                if (airball != null)
+                {
 
-                        vibe_time_remaining = vibe_time; 
-                        }
+                    if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh)
+                    {
 
-                    else{
-                        //If controller not pointed at previous airball, instantiate new object
+                        //Calculate expected end position of airball
                         controller_pos = OVRInput.GetLocalControllerPosition(controller);
                         controller_rot = OVRInput.GetLocalControllerRotation(controller);
-                        end_pos = controller_pos + controller_rot*forward*float_dist + trackingSpace.transform.position;
-                        airball = Instantiate(projectiles[elementIndex], end_pos, Quaternion.identity);
-                        battle.GetComponent<AchievementTracking>().Shot("Airball");
 
-                        // Update stamina bars
-                        statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+                        //Record expected end position of airball
+                        end_pos = controller_pos + controller_rot * forward * float_dist + trackingSpace.transform.position;
 
-                        vibe_time_remaining = vibe_time;               
+                        // Bring airball to expected position each update
+                        airball.transform.position = end_pos;
+                    }
+
+                    // If trigger not held, throw airball
+                    else
+                    {
+
+                        // Launch airball
+                        controller_rot = OVRInput.GetLocalControllerRotation(controller);
+                        airball.GetComponent<Rigidbody>().AddForce(controller_rot * forward * thrust_const);
+                        vibe_time_remaining = vibe_time;
+                        Destroy(airball, projectileLifetime);
+                        airball = null;
+                    }
+                }
+
+                //If airball is not held, check trigger
+                else
+                {
+
+                    // Instantiate/control airball if index trigger is held and cooldown period has passed
+                    if ((OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh) && statusBars.GetComponent<PlayerBars>().EnoughStamina(staminaRequired))
+                    {
+
+                        //Record current selected item
+                        selectedItem = this.GetComponent<BallShooting>().selectedItem;
+
+                        // If selected item is not null
+                        if ((selectedItem != null) && (selectedItem.tag == "Airball"))
+                        {
+                            airball = selectedItem;
+                            airball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                            airball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+                            // Update stamina bars
+                            statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+
+                            vibe_time_remaining = vibe_time;
+                        }
+
+                        else
+                        {
+                            //If controller not pointed at previous airball, instantiate new object
+                            controller_pos = OVRInput.GetLocalControllerPosition(controller);
+                            controller_rot = OVRInput.GetLocalControllerRotation(controller);
+                            end_pos = controller_pos + controller_rot * forward * float_dist + trackingSpace.transform.position;
+                            airball = Instantiate(projectiles[elementIndex], end_pos, Quaternion.identity);
+                            battle.GetComponent<AchievementTracking>().Shot("Airball");
+
+                            // Update stamina bars
+                            statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+
+                            vibe_time_remaining = vibe_time;
+                        }
                     }
                 }
             }
+
         }
+   
     }
 } 
         

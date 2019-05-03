@@ -52,8 +52,8 @@ LightmapSettings:
     m_AlbedoBoost: 1
     m_TemporalCoherenceThreshold: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 1
-    m_EnableRealtimeLightmaps: 0
+    m_EnableBakedLightmaps: 0
+    m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
     serializedVersion: 10
     m_Resolution: 2
@@ -9205,8 +9205,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 870390429}
-  battleMenu: {fileID: 0}
-  exploreMenu: {fileID: 0}
+  battleMenu: {fileID: 220053670}
+  exploreMenu: {fileID: 507740835}
   controller: 2
   laserEnd: {fileID: 1878029066}
   laserBegin: {fileID: 1878029065}
@@ -9224,8 +9224,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 870390429}
-  battleMenu: {fileID: 0}
-  exploreMenu: {fileID: 0}
+  battleMenu: {fileID: 220053670}
+  exploreMenu: {fileID: 507740835}
   controller: 1
   laserEnd: {fileID: 1878029068}
   laserBegin: {fileID: 1878029069}
