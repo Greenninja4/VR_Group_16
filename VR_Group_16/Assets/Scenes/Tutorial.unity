@@ -1553,6 +1553,15 @@ Prefab:
       propertyPath: statusBars
       value: 
       objectReference: {fileID: 1295079772}
+    - target: {fileID: 4104864734643522, guid: f5b527315d9d7d04392e5e643242f93e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114258505233380530, guid: f5b527315d9d7d04392e5e643242f93e,
+        type: 2}
+      propertyPath: pos_y_const
+      value: 0.05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5b527315d9d7d04392e5e643242f93e, type: 2}
   m_IsPrefabAsset: 0
