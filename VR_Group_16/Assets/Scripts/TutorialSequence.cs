@@ -98,22 +98,34 @@ public class TutorialSequence : MonoBehaviour {
         }
 
         else if (stage == 1){
-            healthStaminaTut();
+            ControlsTut();
         }
 
         else if(stage == 2){
-            ThrowTut();
+            healthStaminaTut();
         }
 
         else if(stage == 3){
-            EnemiesTut();
+            staminaTut();
         }
 
         else if(stage == 4){
-            RockwallTut();
+            CycleTut();
         }
 
         else if(stage == 5){
+            ThrowTut ();
+        }
+
+        else if(stage == 6){
+            EnemiesTut ();
+        }
+
+        else if(stage == 7){
+            RockwallTut ();
+        }
+
+        else if(stage == 8){
             FinalThoughts();
         }
 
@@ -125,18 +137,23 @@ public class TutorialSequence : MonoBehaviour {
 
 
     public void IntroText () {
-        // Display text that introduces the game
-        guideWordsText.text = "Welcome to Elemental Experience, a 1-player game that allows you to control the elements of earth, water, fire, and air. In this tutorial, press the start button on your left controller at any time to pause. Use raycast to select continue.";
+        guideWordsText.text = "Press the start button on your left controller to pause. Click continue for tutorial mode.";
+    }
+
+    public void ControlsTut(){
+        guideWordsText.text = "Welcome to Elemental Experience: a game that allows you to control Earth, Water, Fire, and Air.";
     }
 
     public void healthStaminaTut(){
-        guideWordsText.text = "To the right of me are your health and stamina bars. Enemy projectiles that hit you will lower your health, which does not replenish. The stamina is used when you bend an element, but replenishes slowly over time.";
+        guideWordsText.text = "To your right are health and stamina bars. Enemy projectiles that hit you will lower your health.";
     }
 
-    public void ThrowTut (){
+    public void staminaTut(){
+        guideWordsText.text = "The stamina is used when you control an element. Unlike health, stamina replenishes.";
+    }
 
-        // Explain bending objects
-        guideWordsText.text = "To my left are your basic elemental projectiles. The raycast color on each controller dictates which elements you can bend with each hand (yellow = Earth, blue = Water, green = Air, red = Fire). Press A to cycle through elements on each hand, and try using raycasting and index trigger select to pull these projectiles to you (let go to launch). In addition, you can instantiate rocks from the ground, waterballs from the pond, and fire and airballs from the air in the same way.";
+    public void CycleTut(){
+        guideWordsText.text = "Press A to cycle through the elements. To your left, point and pull the trigger to grab a projectile. Let go to release it.";
 
         // Display all 4 prefabs
         if(!objectsDisplayed){
@@ -149,9 +166,13 @@ public class TutorialSequence : MonoBehaviour {
 
     }
 
+    public void ThrowTut (){
+        guideWordsText.text = "You can grab rocks from the ground, waterballs from the pond, and fire / airballs from the air in the same way.";
+    }
+
     public void EnemiesTut (){
         // Explain bending objects
-        guideWordsText.text = "Enemy projectiles will randomly appear and hurtle towards you. The only way to stop them is to hit their element with a superior element. In this game, the paper-rock-scissors order is Earth -> Air -> Water -> Fire -> Earth, so Earth beats Air, etc. Try beating these enemies!";
+        guideWordsText.text = "Enemy projectiles will attack you. Counter pairs are Earth vs. Air and Water vs. Fire. Try beating the incoming enemies.";
 
         // Show user example of enemy hitting you
         if(Time.time > nextFire){
@@ -166,7 +187,7 @@ public class TutorialSequence : MonoBehaviour {
 
     public void RockwallTut (){
         // Tell user how to build rock wall
-        guideWordsText.text = "There is a special earthbending move called rock wall, which lets you protect yourself from enemies. With both controllers on the earth element, hold both side hand triggers and raise your hands to raise a wall. Release the triggers to set the wall in place.";
+        guideWordsText.text = "You can defend yourself with rockwalls. With both controllers pointed down on Earth, hold the side triggers and raise your hands.";
 
         // Show user example of enemy hitting you
         if(Time.time > nextFire){
@@ -182,7 +203,7 @@ public class TutorialSequence : MonoBehaviour {
 
     public void FinalThoughts(){
         // Finishing thoughts for user
-        guideWordsText.text = "That's it! In the main start menu, you can choose to enter battle mode if you think you are ready, or go to the world explorer to check out the different arenas. Thanks for playing, and have fun! Press continue to restart tutorial.";
+        guideWordsText.text = "Now go master the elements in Battle Mode, Explore Mode, or restart this tutorial by pressing continue.";
 
     }
 

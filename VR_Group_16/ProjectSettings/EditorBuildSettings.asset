@@ -53,4 +53,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ExploreFire.unity
     guid: 208ed197a957c904097572dbb2fb5330
+  - enabled: 1
+    path: Assets/Scenes/Achievements.unity
+    guid: 4b8a6e1815ed0814b892317152d0a112
   m_configObjects: {}
