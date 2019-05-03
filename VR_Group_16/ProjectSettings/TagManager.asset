@@ -13,6 +13,7 @@ TagManager:
   - Water
   - StatusBars
   - PauseMenu
+  - Rockwall
   layers:
   - Default
   - TransparentFX

@@ -15,7 +15,7 @@ public class EarthWall : MonoBehaviour
     public GameObject statusBars;
 
     // Initialize private elements
-    private int active_walls;
+    public int active_walls;
     private GameObject cur_wall;
     private float hand_init_height;
     private Vector3 wall_pos_min;
@@ -49,6 +49,9 @@ public class EarthWall : MonoBehaviour
         for (int i = 0;i<max_active_walls;i++){
             timers[i] = 0.0f;
         }
+
+        // Find status bars
+        statusBars = GameObject.FindGameObjectWithTag("StatusBars");
     }
 
     //Update is called once per frame
