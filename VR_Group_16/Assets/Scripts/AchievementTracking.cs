@@ -20,22 +20,23 @@ public class AchievementTracking : MonoBehaviour {
         switch (tag)
         {
             case "Airball":
-                previousHit = PlayerPrefs.GetInt("AirMenuHits");
+                Debug.Log("Hit a :" + tag);
+                previousHit = PlayerPrefs.GetInt("AirMenuHits", 0);
                 PlayerPrefs.SetInt("AirMenuHits", previousHit + 1);
                 break;
 
             case "Rock":
-                previousHit = PlayerPrefs.GetInt("EarthMenuHits");
+                previousHit = PlayerPrefs.GetInt("EarthMenuHits", 0);
                 PlayerPrefs.SetInt("EarthMenuHits", previousHit + 1);
                 break;
 
             case "Fireball":
-                previousHit = PlayerPrefs.GetInt("FireMenuHits");
+                previousHit = PlayerPrefs.GetInt("FireMenuHits", 0);
                 PlayerPrefs.SetInt("FireMenuHits", previousHit + 1);
                 break;
 
             case "Waterball":
-                previousHit = PlayerPrefs.GetInt("WaterMenuHits");
+                previousHit = PlayerPrefs.GetInt("WaterMenuHits", 0);
                 PlayerPrefs.SetInt("WaterMenuHits", previousHit + 1);
                 break;
         }
@@ -48,22 +49,22 @@ public class AchievementTracking : MonoBehaviour {
         switch (element)
         {
             case "Air":
-                previousPlayTime = PlayerPrefs.GetFloat("AirMenuTime");
+                previousPlayTime = PlayerPrefs.GetFloat("AirMenuTime", 0);
                 PlayerPrefs.SetFloat("AirMenuTime", previousPlayTime + time);
                 break;
 
             case "Water":
-                previousPlayTime = PlayerPrefs.GetFloat("WaterMenuTime");
+                previousPlayTime = PlayerPrefs.GetFloat("WaterMenuTime", 0);
                 PlayerPrefs.SetFloat("WaterMenuTime", previousPlayTime + time);
                 break;
 
             case "Fire":
-                previousPlayTime = PlayerPrefs.GetFloat("FireMenuTime");
+                previousPlayTime = PlayerPrefs.GetFloat("FireMenuTime", 0);
                 PlayerPrefs.SetFloat("FireMenuTime", previousPlayTime + time);
                 break;
 
             case "Earth":
-                previousPlayTime = PlayerPrefs.GetFloat("EarthMenuTime");
+                previousPlayTime = PlayerPrefs.GetFloat("EarthMenuTime", 0);
                 PlayerPrefs.SetFloat("EarthMenuTime", previousPlayTime + time);
                 break;
         }
@@ -75,22 +76,22 @@ public class AchievementTracking : MonoBehaviour {
         switch (tag)
         {
             case "Airball":
-                previousShot = PlayerPrefs.GetInt("AirMenuShots");
+                previousShot = PlayerPrefs.GetInt("AirMenuShots", 0);
                 PlayerPrefs.SetInt("AirMenuShots", previousShot + 1);
                 break;
 
             case "Rock":
-                previousShot = PlayerPrefs.GetInt("EarthMenuShots");
+                previousShot = PlayerPrefs.GetInt("EarthMenuShots", 0);
                 PlayerPrefs.SetInt("EarthMenuShots", previousShot + 1);
                 break;
 
             case "Fireball":
-                previousShot = PlayerPrefs.GetInt("FireMenuShots");
+                previousShot = PlayerPrefs.GetInt("FireMenuShots", 0);
                 PlayerPrefs.SetInt("FireMenuShots", previousShot + 1);
                 break;
 
             case "Waterball":
-                previousShot = PlayerPrefs.GetInt("WaterMenuShots");
+                previousShot = PlayerPrefs.GetInt("WaterMenuShots", 0);
                 PlayerPrefs.SetInt("WaterMenuShots", previousShot + 1);
                 break;
         }

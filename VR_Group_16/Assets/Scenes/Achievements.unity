@@ -7049,6 +7049,7 @@ GameObject:
   - component: {fileID: 1169654301}
   - component: {fileID: 1169654300}
   - component: {fileID: 1169654299}
+  - component: {fileID: 1169654310}
   m_Layer: 0
   m_Name: RightHandAnchor
   m_TagString: Untagged
@@ -7196,7 +7197,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1169654297}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f7c5c8849a569546a139c1853500745, type: 3}
   m_Name: 
@@ -7348,6 +7349,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1169654310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1169654297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed6a752a6e54f3f40874bd307ad7143f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menu: {fileID: 870390429}
+  controller: 2
+  laserEnd: {fileID: 895272580}
+  laserBegin: {fileID: 183356792}
+  hitpoint: {x: 0, y: 0, z: 0}
+  selectedItem: {fileID: 0}
 --- !u!1 &1175107824
 GameObject:
   m_ObjectHideFlags: 0
@@ -13251,7 +13269,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2102626143}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f7c5c8849a569546a139c1853500745, type: 3}
   m_Name: 
@@ -13415,9 +13433,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 870390429}
-  controller: 0
-  laserEnd: {fileID: 0}
-  laserBegin: {fileID: 0}
+  controller: 1
+  laserEnd: {fileID: 559245742}
+  laserBegin: {fileID: 1928252379}
   hitpoint: {x: 0, y: 0, z: 0}
   selectedItem: {fileID: 0}
 --- !u!1 &2103110394

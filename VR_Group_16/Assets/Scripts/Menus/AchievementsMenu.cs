@@ -43,6 +43,7 @@ public class AchievementsMenu : MonoBehaviour {
         }
         // Trigger clicked -> raycast to handle chosen object
         if (!clicked && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > triggerThreshold) {
+            Debug.Log(selectedItem.name);
             if(selectedItem != null){
                 menu.GetComponent<Achievements>().clickHandle(selectedItem);
                 clicked = true;

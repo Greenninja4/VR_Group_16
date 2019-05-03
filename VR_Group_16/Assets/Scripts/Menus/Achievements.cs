@@ -12,6 +12,14 @@ public class Achievements : MonoBehaviour
 
     private Dictionary<string, GameObject> submenus = new Dictionary<string, GameObject>();
 
+    private Dictionary<string, string> menuTransitions = new Dictionary<string, string>(){
+        {"Fire", "FireMenu"},
+        {"Air", "AirMenu"},
+        {"Water","WaterMenu"},
+        {"Earth", "EarthMenu"},
+        {"Back", "TopMenu"}
+    };
+
     //Current things that require submenus
     private string[] approved_submenus = { "AirMenu", "FireMenu", "WaterMenu", "EarthMenu", "TopMenu" };
 
@@ -22,7 +30,7 @@ public class Achievements : MonoBehaviour
         {"Shots", "Fire balls: " },
         {"Hits", "Hits: " },
         {"Accuracy", "Accuracy: " },
-        {"Back", "Quit" },
+        {"Back", "Back" },
         {"Title", "Fire Achievements" }
     };
     private static Dictionary<string, string> waterMenuText = new Dictionary<string, string>()
@@ -31,7 +39,7 @@ public class Achievements : MonoBehaviour
         {"Shots", "Water balls: " },
         {"Hits", "Hits: " },
         {"Accuracy", "Accuracy: " },
-        {"Back", "Quit" },
+        {"Back", "Back" },
         {"Title", "Water Achievements" }
 
     };
@@ -41,7 +49,7 @@ public class Achievements : MonoBehaviour
         {"Shots", "Rock balls: " },
         {"Hits", "Hits: " },
         {"Accuracy", "Accuracy: " },
-        {"Back", "Quit" },
+        {"Back", "Back" },
         {"Title", "Earth Achievements" }
 
     };
@@ -51,7 +59,7 @@ public class Achievements : MonoBehaviour
        { "Shots", "Air balls: " },
        { "Hits", "Hits: " },
        { "Accuracy", "Accuracy: " },
-       { "Back", "Quit" },
+       { "Back", "Back" },
         {"Title", "Air Achievements" }
 
     };
@@ -61,7 +69,7 @@ public class Achievements : MonoBehaviour
        { "Fire", "Fire" },
        { "Water", "Water" },
        { "Earth", "Earth" },
-       { "Air", "Air: " },
+       { "Air", "Air " },
        { "Quit", "Quit" },
        { "Title", "Achievements" }
 
@@ -126,13 +134,15 @@ public class Achievements : MonoBehaviour
                 this.field.transform.Find("Canvas").transform.Find("Text").GetComponent<Text>().text = currentMenuText[menuOption];
             }
         }
+        this.submenus[this.curr_submenu].gameObject.SetActive(true);
 
-        clickHandle(submenus["TopMenu"]);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(curr_submenu);
         this.visibleMenu = submenus[curr_submenu]; // gameObject for editting
         this.currentMenuText = menuText[curr_submenu]; //dictionary<string, string> with each field label and value
         foreach (string menuOption in currentMenuText.Keys)
@@ -148,47 +158,71 @@ public class Achievements : MonoBehaviour
             {
                 case "Time":
                     playerField = curr_submenu + "Time";
-                    fieldText = currentMenuText[menuOption] + PlayerPrefs.GetFloat(playerField);
+                    float timePlayed = PlayerPrefs.GetFloat(playerField, 0)/60;
+                    
+                    fieldText = currentMenuText[menuOption] + timePlayed.ToString("0.0");
+                    this.field.transform.Find("Canvas").transform.Find("Text").GetComponent<Text>().text = fieldText;
                     break;
                 case "Shots":
                     playerField = curr_submenu + "Shots";
-                    fieldText = currentMenuText[menuOption] + PlayerPrefs.GetInt(playerField);
+                    fieldText = currentMenuText[menuOption] + PlayerPrefs.GetInt(playerField, 0);
+                    this.field.transform.Find("Canvas").transform.Find("Text").GetComponent<Text>().text = fieldText;
+
                     break;
                 case "Hits":
                     playerField = curr_submenu + "Hits";
-                    fieldText = currentMenuText[menuOption] + PlayerPrefs.GetInt(playerField);
+                    fieldText = currentMenuText[menuOption] + PlayerPrefs.GetInt(playerField, 0);
+                    this.field.transform.Find("Canvas").transform.Find("Text").GetComponent<Text>().text = fieldText;
+
                     break;
                 case "Accuracy":
                     playerField = curr_submenu + "Shots";
-                    int shots = PlayerPrefs.GetInt(playerField);
+                    int shots = PlayerPrefs.GetInt(playerField, 1);
                     playerField = curr_submenu + "Hits";
-                    int hits = PlayerPrefs.GetInt(playerField);
+                    int hits = PlayerPrefs.GetInt(playerField, 0);
                     float accuracy = hits/shots;
+                    accuracy /= 60;
                     fieldText = currentMenuText[menuOption] + accuracy.ToString("0.0") + "%";
+                    this.field.transform.Find("Canvas").transform.Find("Text").GetComponent<Text>().text = fieldText;
+
                     break;
 
             }
-         
         }
     }
 
     public void clickHandle(GameObject selectedItem)
     {
-        GameObject hitMenu;
-        this.submenus.TryGetValue(selectedItem.name, out hitMenu);
+        // //Handle back press
+        // if (selectedItem.name == "Back")
+        // {
+        //     this.submenus[curr_submenu].SetActive(false);
+        //     this.menu.gameObject.SetActive(true);
+        // }
 
+        //Handle menu transitions
+        if(selectedItem.name == "Quit"){
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"BattleEarth");
+
+        }
+
+        GameObject hitMenu;
+        string targetMenu;
+        Debug.Log(selectedItem.name);
+        Debug.Log("In clickHandle");
+        this.menuTransitions.TryGetValue(selectedItem.name, out targetMenu);
+        if(targetMenu == null){
+            return;
+        }
+
+        this.submenus.TryGetValue(targetMenu, out hitMenu);
         if (hitMenu != null)
         {
             Debug.Log(hitMenu.name);
             this.submenus[this.curr_submenu].gameObject.SetActive(false);
             hitMenu.SetActive(true);
-            this.curr_submenu = selectedItem.name;
-        }
-
-        if (selectedItem.name == "Back")
-        {
-            this.submenus[curr_submenu].SetActive(false);
-            this.menu.gameObject.SetActive(true);
+            this.curr_submenu = targetMenu;
         }
     }
+
 }

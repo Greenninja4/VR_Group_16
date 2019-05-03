@@ -7,7 +7,7 @@ public class ObjectCollisions : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        battle = this.transform.root.gameObject;
+        battle = GameObject.Find("Battle");
         Debug.Log(battle.name);
 	}
 	
