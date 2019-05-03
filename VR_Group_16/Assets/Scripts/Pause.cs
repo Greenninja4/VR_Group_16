@@ -6,7 +6,7 @@ public class Pause : MonoBehaviour {
 
     // Status variable & menu object
     private bool paused;
-    public GameObject player;
+    public GameObject player, centerEye;
     public GameObject pauseMenu;
     // Ray cast controller
     private float triggerThreshold = 0.5f;
@@ -34,6 +34,7 @@ public class Pause : MonoBehaviour {
         laserEndR = trackingSpace.transform.Find("RightHandAnchor").gameObject.transform.Find("LaserEnd").gameObject;
         laserBeginL = trackingSpace.transform.Find("LeftHandAnchor").gameObject.transform.Find("LaserBegin").gameObject;
         laserBeginR = trackingSpace.transform.Find("RightHandAnchor").gameObject.transform.Find("LaserBegin").gameObject;
+        centerEye = trackingSpace.transform.Find("CenterEyeAnchor").gameObject;
 
     }
         
@@ -42,6 +43,11 @@ public class Pause : MonoBehaviour {
         paused = true;
         Time.timeScale = 0.00001f;
         pauseMenu.SetActive(true);
+
+        // Place pause Menu in front of user
+        pauseMenu.transform.position = centerEye.transform.position + centerEye.transform.rotation*(new Vector3(0,0,3f)
+        );
+        pauseMenu.transform.rotation = centerEye.transform.rotation;
     }
 
     public void ResumeGame(){

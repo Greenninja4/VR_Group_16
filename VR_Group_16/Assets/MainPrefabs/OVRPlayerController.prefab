@@ -650,7 +650,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1702293030690630}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.231268, y: -0.6477251, z: 1.2537576}
+  m_LocalPosition: {x: -2.4574451, y: -2.44, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4529726015056598}
@@ -1163,10 +1163,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d936adfbb0cc0f4b8f5ae54cc9fae4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1702293030690630}
+  centerEye: {fileID: 0}
   pauseMenu: {fileID: 0}
-  Rcontroller: 0
-  Lcontroller: 0
+  Rcontroller: 2
+  Lcontroller: 1
   hitpointR: {x: 0, y: 0, z: 0}
   hitpointL: {x: 0, y: 0, z: 0}
   selectedItemL: {fileID: 0}
