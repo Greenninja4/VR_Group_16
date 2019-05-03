@@ -25,8 +25,8 @@ public class EnemyMotion : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        RaycastHit hit;
-        Vector3 rayDirection = player.transform.position - this.transform.position;
+        //RaycastHit hit;
+        //Vector3 rayDirection = player.transform.position - this.transform.position;
         speed += speed * Time.deltaTime * 0.000000000001f;
         
         if (Vector3.Distance(player.transform.position, transform.position) >

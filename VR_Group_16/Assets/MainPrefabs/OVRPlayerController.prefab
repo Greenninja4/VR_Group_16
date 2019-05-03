@@ -75,9 +75,8 @@ GameObject:
   - component: {fileID: 114912166012902874}
   - component: {fileID: 114203504397889690}
   - component: {fileID: 114371855870807328}
-  - component: {fileID: 114711438842447144}
   - component: {fileID: 114258505233380530}
-  - component: {fileID: 114651970308070604}
+  - component: {fileID: 114956474378475350}
   m_Layer: 0
   m_Name: LeftHandAnchor
   m_TagString: Untagged
@@ -167,8 +166,7 @@ GameObject:
   - component: {fileID: 114049890466849306}
   - component: {fileID: 114893286889725584}
   - component: {fileID: 114211261397642832}
-  - component: {fileID: 114566001142794900}
-  - component: {fileID: 114643151055860956}
+  - component: {fileID: 114924770731789480}
   m_Layer: 0
   m_Name: RightHandAnchor
   m_TagString: Untagged
@@ -266,6 +264,7 @@ GameObject:
   - component: {fileID: 114304493805659160}
   - component: {fileID: 114688067883571518}
   - component: {fileID: 114728665688141990}
+  - component: {fileID: 114206932969670014}
   m_Layer: 0
   m_Name: OVRPlayerController
   m_TagString: MainPlayer
@@ -650,8 +649,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1702293030690630}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.86, z: -10.9}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 12.231268, y: -0.6477251, z: 1.2537576}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4529726015056598}
@@ -1153,6 +1152,25 @@ MonoBehaviour:
   hitpoint: {x: 0, y: 0, z: 0}
   selectedItem: {fileID: 0}
   elementIndex: 0
+--- !u!114 &114206932969670014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1702293030690630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d936adfbb0cc0f4b8f5ae54cc9fae4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  Rcontroller: 0
+  Lcontroller: 0
+  hitpointR: {x: 0, y: 0, z: 0}
+  hitpointL: {x: 0, y: 0, z: 0}
+  selectedItemL: {fileID: 0}
+  selectedItemR: {fileID: 0}
 --- !u!114 &114211261397642832
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1195,12 +1213,13 @@ MonoBehaviour:
   Rcontroller: 2
   leftHandAnchor: {fileID: 1329171234441186}
   rightHandAnchor: {fileID: 1581083808355052}
-  statusBars: {fileID: 1242053081103112, guid: d48f887a8eccefa4c9809ec9651b8e95, type: 2}
+  statusBars: {fileID: 0}
+  active_walls: 0
   max_active_walls: 3
   float_dist: 4
   disp_max: 0.8
   wallLifetime: 10
-  pos_y_const: 0.01
+  pos_y_const: -1.15
   staminaRequired: 20
 --- !u!114 &114304493805659160
 MonoBehaviour:
@@ -1466,47 +1485,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usePerEyeCameras: 0
   useFixedUpdateForTracking: 0
---- !u!114 &114566001142794900
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1581083808355052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82e2a50e599c7a4439700c5549f03ea2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: 2
-  projectiles:
-  - {fileID: 1272952387971198, guid: e39e6c4ffa3ddff40be2b3c3624d6508, type: 2}
-  - {fileID: 1271192691012698, guid: 43d6ab435386f83448e0ad8c83d7d21b, type: 2}
-  - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
-  - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
-  player: {fileID: 1702293030690630}
-  trigger_thresh: 0.5
-  float_dist: 2
-  attraction_const: 0.02
-  thrust_const: 175
-  projectileLifetime: 20
-  staminaRequired: 20
---- !u!114 &114643151055860956
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1581083808355052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaab33b6357c79c459c2c91564c4bf56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 1676104312141572, guid: 1c65df31bb52614488d6baddc3f39c49, type: 2}
-  controller: 2
-  laserEnd: {fileID: 4362479834223666}
-  laserBegin: {fileID: 4550762453801622}
-  hitpoint: {x: 0, y: 0, z: 0}
-  selectedItem: {fileID: 0}
 --- !u!114 &114648152581609534
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1518,23 +1496,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e53b07ad62d980a4da9fffff0b05fd2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114651970308070604
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1329171234441186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaab33b6357c79c459c2c91564c4bf56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 1676104312141572, guid: 1c65df31bb52614488d6baddc3f39c49, type: 2}
-  controller: 1
-  laserEnd: {fileID: 4972134300563888}
-  laserBegin: {fileID: 4429464240787112}
-  hitpoint: {x: 0, y: 0, z: 0}
-  selectedItem: {fileID: 0}
 --- !u!114 &114679665396032738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1561,30 +1522,6 @@ MonoBehaviour:
   fadeInTexture: {fileID: 0}
   speedRotationIncrement: 0.05
   layerName: Default
---- !u!114 &114711438842447144
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1329171234441186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82e2a50e599c7a4439700c5549f03ea2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: 1
-  projectiles:
-  - {fileID: 1272952387971198, guid: e39e6c4ffa3ddff40be2b3c3624d6508, type: 2}
-  - {fileID: 1271192691012698, guid: 43d6ab435386f83448e0ad8c83d7d21b, type: 2}
-  - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
-  - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
-  player: {fileID: 1702293030690630}
-  trigger_thresh: 0.5
-  float_dist: 2
-  attraction_const: 0.02
-  thrust_const: 175
-  projectileLifetime: 20
-  staminaRequired: 20
 --- !u!114 &114721359189099246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1944,6 +1881,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0e33623ec5372748b5703f61a4df82d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114924770731789480
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1581083808355052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52f90fba547d664b90b6500c1ada8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: 2
+  projectiles:
+  - {fileID: 1272952387971198, guid: e39e6c4ffa3ddff40be2b3c3624d6508, type: 2}
+  - {fileID: 1271192691012698, guid: 43d6ab435386f83448e0ad8c83d7d21b, type: 2}
+  - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
+  - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
+  player: {fileID: 1702293030690630}
+  trigger_thresh: 0.5
+  float_dist: 2
+  attraction_const: 0.02
+  thrust_const: 175
+  projectileLifetime: 20
+  staminaRequired: 20
 --- !u!114 &114948648851976586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1955,6 +1916,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb7a6650b6cb46545967d3b380b7396c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114956474378475350
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1329171234441186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52f90fba547d664b90b6500c1ada8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: 1
+  projectiles:
+  - {fileID: 1272952387971198, guid: e39e6c4ffa3ddff40be2b3c3624d6508, type: 2}
+  - {fileID: 1271192691012698, guid: 43d6ab435386f83448e0ad8c83d7d21b, type: 2}
+  - {fileID: 1145152465665164, guid: 012d8f1c05cc8214ba0d803683bac048, type: 2}
+  - {fileID: 1651824268373096, guid: ca9346d1f0d089148b75895249cd7cfd, type: 2}
+  player: {fileID: 1702293030690630}
+  trigger_thresh: 0.5
+  float_dist: 2
+  attraction_const: 0.02
+  thrust_const: 175
+  projectileLifetime: 20
+  staminaRequired: 20
 --- !u!120 &120647363612230658
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -2174,7 +2159,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 2
-  m_Radius: 0.4
+  m_Radius: 0.01
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.01
