@@ -194,8 +194,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1242053081103112}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.34, y: 3.45, z: -7.21}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 10.571268, y: 1.3522749, z: 7.2537575}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4080466321037854}
@@ -594,12 +594,15 @@ MonoBehaviour:
   maxHealth: 100
   maxStamina: 100
   currentHealth: 100
-  currentStamina: 0
+  currentStamina: 100
   tiredTimeStamp: 149.64058
+  controllerL: 1
+  controllerR: 2
   staminaInnerBar: {fileID: 1863810885140778}
   staminaOuterBar: {fileID: 1368517692658508}
   healthInnerBar: {fileID: 1618203158661392}
   healthOuterBar: {fileID: 1386029048854320}
+  vibe_time: 1
   damageAudio: {fileID: 82797064711388706}
 --- !u!136 &136075800413244350
 CapsuleCollider:

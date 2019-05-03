@@ -11,6 +11,8 @@ public class PlayerBars : MonoBehaviour {
     private float staminaCooldown = 10;
     private float staminaCooldownDepleted = 1;
     public float tiredTimeStamp;
+    public OVRInput.Controller controllerL;
+    public OVRInput.Controller controllerR;
 
     // State variables
     bool damaged;
@@ -23,6 +25,9 @@ public class PlayerBars : MonoBehaviour {
     public GameObject healthInnerBar;
     public GameObject healthOuterBar;
 
+    public float vibe_time = 0.8f; //Seconds on the vibration
+    private float vibe_time_remaining;
+
     // Damage audio source
     public AudioSource damageAudio;
 
@@ -30,11 +35,13 @@ public class PlayerBars : MonoBehaviour {
     void Awake(){
         // Set initial values & update bars
         UpdateStaminaBar();
-        UpdateHealthBar();
+        StartHealthBar();
         // Set initial states
         damaged = false;
         tired = false;
         dead = false;
+
+        vibe_time_remaining = 0f;
     }
 
     // Call on 
@@ -53,6 +60,19 @@ public class PlayerBars : MonoBehaviour {
             }
             UpdateStaminaBar();
         }
+
+        if (vibe_time_remaining > 0)
+        {
+            vibe_time_remaining -= Time.deltaTime;
+            OVRInput.SetControllerVibration(0.8f, 0.6f, controllerR);
+            OVRInput.SetControllerVibration(0.8f, 0.6f, controllerL);
+        }
+        else
+        {
+            OVRInput.SetControllerVibration(0, 0, controllerR);
+            OVRInput.SetControllerVibration(0, 0, controllerL);
+            vibe_time_remaining = 0f;
+        }
     }
 
     // Update the stamina bar gui
@@ -65,6 +85,16 @@ public class PlayerBars : MonoBehaviour {
         staminaInnerBar.transform.position = new Vector3(outer_pos.x - 0.9f *(1 - staminaBarRatio), inner_pos.y, inner_pos.z);
     }
 
+    void StartHealthBar()
+    {
+        float healthBarRatio = currentHealth / maxHealth;
+        Vector3 outer = healthOuterBar.transform.localScale;
+        Vector3 outer_pos = healthOuterBar.transform.position;
+        Vector3 inner_pos = healthInnerBar.transform.position;
+        healthInnerBar.transform.localScale = new Vector3(0.5f * outer.x, 0.9f * outer.y * healthBarRatio, 0.5f * outer.z);
+        healthInnerBar.transform.position = new Vector3(outer_pos.x - 0.9f * (1 - healthBarRatio), inner_pos.y, inner_pos.z);
+    }
+
     // Update the health bar gui
     void UpdateHealthBar(){
         float healthBarRatio = currentHealth / maxHealth;
@@ -73,6 +103,7 @@ public class PlayerBars : MonoBehaviour {
         Vector3 inner_pos = healthInnerBar.transform.position;
         healthInnerBar.transform.localScale = new Vector3(0.5f * outer.x, 0.9f * outer.y * healthBarRatio, 0.5f * outer.z);
         healthInnerBar.transform.position = new Vector3(outer_pos.x - 0.9f *(1 - healthBarRatio), inner_pos.y, inner_pos.z);
+        vibe_time_remaining = vibe_time;
     }
 
     // Omae wa mou shindeiru

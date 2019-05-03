@@ -1463,28 +1463,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114586105125738984, guid: d48f887a8eccefa4c9809ec9651b8e95,
         type: 2}
-      propertyPath: currentStamina
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 136811073125678738, guid: d48f887a8eccefa4c9809ec9651b8e95,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 136627355821729714, guid: d48f887a8eccefa4c9809ec9651b8e95,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 136075800413244350, guid: d48f887a8eccefa4c9809ec9651b8e95,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 136791440080470414, guid: d48f887a8eccefa4c9809ec9651b8e95,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
+      propertyPath: vibe_time
+      value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d48f887a8eccefa4c9809ec9651b8e95, type: 2}

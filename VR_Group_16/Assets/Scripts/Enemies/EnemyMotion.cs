@@ -27,7 +27,7 @@ public class EnemyMotion : MonoBehaviour {
     void Update () {
         //RaycastHit hit;
         //Vector3 rayDirection = player.transform.position - this.transform.position;
-        speed += speed * Time.deltaTime * 0.000000000001f;
+        speed += speed * Time.deltaTime * 0.00001f;
         
         if (Vector3.Distance(player.transform.position, transform.position) >
             playerRadius){

@@ -70,7 +70,7 @@ public class Achievements : MonoBehaviour
        { "Water", "Water" },
        { "Earth", "Earth" },
        { "Air", "Air " },
-       { "Quit", "Quit" },
+       { "Quit", "Back" },
        { "Title", "Achievements" }
 
     };

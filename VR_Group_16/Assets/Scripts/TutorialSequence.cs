@@ -137,7 +137,7 @@ public class TutorialSequence : MonoBehaviour {
 
 
     public void IntroText () {
-        guideWordsText.text = "Press the start button on your left controller to pause. Click continue for tutorial mode.";
+        guideWordsText.text = "Press the start button on your left controller to pause. Point your raycast to continue and press the trigger for tutorial mode.";
     }
 
     public void ControlsTut(){
@@ -153,7 +153,7 @@ public class TutorialSequence : MonoBehaviour {
     }
 
     public void CycleTut(){
-        guideWordsText.text = "Press A to cycle through the elements. To your left, point and pull the trigger to grab a projectile. Let go to release it.";
+        guideWordsText.text = "Press A, B, X or Y to cycle through the elements. Point and pull the index trigger to grab a projectile. Let go to release it.";
 
         // Display all 4 prefabs
         if(!objectsDisplayed){
@@ -172,7 +172,7 @@ public class TutorialSequence : MonoBehaviour {
 
     public void EnemiesTut (){
         // Explain bending objects
-        guideWordsText.text = "Enemy projectiles will attack you. Counter pairs are Earth vs. Air and Water vs. Fire. Try beating the incoming enemies.";
+        guideWordsText.text = "Enemy projectiles will attack you. Counter Earth (brown) with Air (white) and vice versa. Similarly, counter Water (blue) with Fire (red) and vice-versa. Try beating the incoming enemies to your right.";
 
         // Show user example of enemy hitting you
         if(Time.time > nextFire){
@@ -187,7 +187,7 @@ public class TutorialSequence : MonoBehaviour {
 
     public void RockwallTut (){
         // Tell user how to build rock wall
-        guideWordsText.text = "You can defend yourself with rockwalls. With both controllers pointed down on Earth, hold the side triggers and raise your hands.";
+        guideWordsText.text = "You can defend yourself with rockwalls. With both controllers pointed to the ground on Earth mode, hold the side triggers and raise your hands.";
 
         // Show user example of enemy hitting you
         if(Time.time > nextFire){

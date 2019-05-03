@@ -56,6 +56,8 @@ public class RockThrow : MonoBehaviour {
         statusBars = GameObject.FindGameObjectWithTag("StatusBars");
         mainPlayer = GameObject.FindGameObjectWithTag("MainPlayer");
 
+        vibe_time_remaining = 0f;
+
     }
 
     // Update is called once per frame
@@ -68,7 +70,7 @@ public class RockThrow : MonoBehaviour {
             if (vibe_time_remaining > 0)
             {
                 vibe_time_remaining -= Time.deltaTime;
-                OVRInput.SetControllerVibration(0.6f, 0.5f, controller);
+                OVRInput.SetControllerVibration(0.8f, 0.6f, controller);
             }
             else
             {

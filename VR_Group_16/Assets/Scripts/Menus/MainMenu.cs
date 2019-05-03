@@ -44,7 +44,11 @@ public class MainMenu : MonoBehaviour {
             menu.SetActive(false);
             exploreMenu.SetActive(true);
         }
-        if(selectedItem.name == "Quit"){
+        if (selectedItem.name == "Achievements")
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName: "Achievements");
+        }
+        if (selectedItem.name == "Quit"){
             #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
             #else
