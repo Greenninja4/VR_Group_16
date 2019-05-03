@@ -110,7 +110,7 @@ public class PlayerBars : MonoBehaviour {
         }
     }
 
-    public bool EnoughStamina(){
-        return (currentStamina > 0);
+    public bool EnoughStamina(float amount){
+        return (currentStamina > amount);
     }
 }

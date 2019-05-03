@@ -15,6 +15,7 @@ public class EarthWall : MonoBehaviour
     public GameObject statusBars;
 
     // Initialize private elements
+    private float vibe_time_remaining;
     public int active_walls;
     private GameObject cur_wall;
     private float hand_init_height;
@@ -33,7 +34,8 @@ public class EarthWall : MonoBehaviour
     public float disp_max = 0.8f; // Max displacement for hands (in m) relative to initial hand height
     public float wallLifetime = 10.0f; //Time (in sec) that each wall stays up
     public float pos_y_const = 0.01f; // Prevents z-fighting in wall render
-    public float staminaRequired = 20;
+    public float staminaRequired = 30;
+    public float vibe_time = 0.5f; //Seconds on the vibration
 
     private float[] timers; // Set timers to know how many walls are still active
 
@@ -56,6 +58,14 @@ public class EarthWall : MonoBehaviour
 
     //Update is called once per frame
     void Update(){
+        if(vibe_time_remaining >= vibe_time){
+            OVRInput.SetControllerVibration(0.1f,0.5f, Lcontroller);
+            OVRInput.SetControllerVibration(0.1f,0.5f, Rcontroller); 
+        }
+        else{
+            OVRInput.SetControllerVibration(0,0,Lcontroller);
+            OVRInput.SetControllerVibration(0,0,Rcontroller);
+        }
 
         // Record current element index of each hand
         elementIndexL = leftHandAnchor.GetComponent<BallShooting>().elementIndex;
@@ -107,6 +117,7 @@ public class EarthWall : MonoBehaviour
                     Destroy(cur_wall, wallLifetime);
                     cur_wall = null;
                     timers[rotating_timer_cnt] = wallLifetime;
+                    vibe_time_remaining = 0.0f; 
                     rotating_timer_cnt = (rotating_timer_cnt+1) % max_active_walls;
                 }
             }
@@ -117,7 +128,7 @@ public class EarthWall : MonoBehaviour
                 // If triggers held, build new wall
                 if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Lcontroller) > 0.5 
                 && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Rcontroller) > 0.5
-                && statusBars.GetComponent<PlayerBars>().EnoughStamina()){
+                && statusBars.GetComponent<PlayerBars>().EnoughStamina(staminaRequired)){
 
 
                     // Find average hand position when activated
@@ -137,6 +148,8 @@ public class EarthWall : MonoBehaviour
 
                     // Produce new wall object
                     cur_wall = Instantiate(rockwallprefab, wall_pos_min, wall_rot);
+
+                    vibe_time_remaining = vibe_time; 
 
                     // Update stamina bars
                     statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);

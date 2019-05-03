@@ -30,6 +30,8 @@ public class RockThrow : MonoBehaviour {
     public float thrust_const = 175.0f; //Constant of thrust
     public int projectileLifetime = 20;
     public float staminaRequired = 20;
+    public float vibe_time = 0.2f; //Seconds on the vibration
+    private float vibe_time_remaining;
 
     private GameObject battle;
 
@@ -54,6 +56,13 @@ public class RockThrow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if(vibe_time_remaining > 0){
+            vibe_time_remaining -= Time.deltaTime;
+            OVRInput.SetControllerVibration(0.6f,0.5f, controller);
+        }
+        else{
+            OVRInput.SetControllerVibration(0,0,controller);
+        }
 
         //Record current element index of hand
         elementIndex = this.GetComponent<BallShooting>().elementIndex;
@@ -86,6 +95,7 @@ public class RockThrow : MonoBehaviour {
                     // Launch rock
                     controller_rot = OVRInput.GetLocalControllerRotation(controller);
                     rock.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
+                    vibe_time_remaining = vibe_time;   
                     Destroy(rock, projectileLifetime);
                     rock = null;
                 }
@@ -95,7 +105,7 @@ public class RockThrow : MonoBehaviour {
             else{
 
                  // Instantiate/control rock if index trigger is held and if enough stamina
-                if((OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh)&&statusBars.GetComponent<PlayerBars>().EnoughStamina()){
+                if((OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh)&&statusBars.GetComponent<PlayerBars>().EnoughStamina(staminaRequired)){
             
                     //Record current selected item
                     selectedItem = this.GetComponent<BallShooting>().selectedItem;
@@ -108,7 +118,8 @@ public class RockThrow : MonoBehaviour {
                             rock = Instantiate(projectiles[elementIndex], this.GetComponent<BallShooting>().hitpoint + above_ground, Quaternion.identity);
                             battle.GetComponent<AchievementTracking>().Shot("Rock");
                             // Update stamina bars
-                            statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);                
+                            statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);    
+                            vibe_time_remaining = vibe_time;           
                         }
 
                         else if(selectedItem.tag == "Rock"){
@@ -118,6 +129,8 @@ public class RockThrow : MonoBehaviour {
 
                             // Update stamina bars
                             statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+
+                            vibe_time_remaining = vibe_time;
                         }
                     }
                 }

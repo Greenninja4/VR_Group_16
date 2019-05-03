@@ -26,16 +26,22 @@ public class AchievementTracking : MonoBehaviour {
                 break;
 
             case "Rock":
+                Debug.Log("Hit a :" + tag);
+
                 previousHit = PlayerPrefs.GetInt("EarthMenuHits", 0);
                 PlayerPrefs.SetInt("EarthMenuHits", previousHit + 1);
                 break;
 
             case "Fireball":
+                Debug.Log("Hit a :" + tag);
+
                 previousHit = PlayerPrefs.GetInt("FireMenuHits", 0);
                 PlayerPrefs.SetInt("FireMenuHits", previousHit + 1);
                 break;
 
             case "Waterball":
+                Debug.Log("Hit a :" + tag);
+
                 previousHit = PlayerPrefs.GetInt("WaterMenuHits", 0);
                 PlayerPrefs.SetInt("WaterMenuHits", previousHit + 1);
                 break;

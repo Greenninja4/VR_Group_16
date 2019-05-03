@@ -27,6 +27,8 @@ public class FireThrow : MonoBehaviour {
     public float thrust_const = 175.0f; //Constant of thrust
     public int projectileLifetime = 20;
     public float staminaRequired = 20;
+    public float vibe_time = 0.2f; //Seconds on the vibration
+    private float vibe_time_remaining;
 
     private GameObject battle;
 
@@ -51,6 +53,13 @@ public class FireThrow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if(vibe_time_remaining > 0){
+            vibe_time_remaining -= Time.deltaTime;
+            OVRInput.SetControllerVibration(0.6f,0.5f, controller);
+        }
+        else{
+            OVRInput.SetControllerVibration(0,0,controller);
+        }
 
         //Record current element index of hand
         elementIndex = this.GetComponent<BallShooting>().elementIndex;
@@ -81,6 +90,7 @@ public class FireThrow : MonoBehaviour {
                     controller_rot = OVRInput.GetLocalControllerRotation(controller);
                     fireball.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
                     Destroy(fireball, projectileLifetime);
+                    vibe_time_remaining = vibe_time;
                     fireball = null;
                     
                 }
@@ -91,7 +101,7 @@ public class FireThrow : MonoBehaviour {
             else{
 
                  // Instantiate/control fireball if index trigger is held and cooldown period has passed
-                if((OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh)&&statusBars.GetComponent<PlayerBars>().EnoughStamina()){
+                if((OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh)&&statusBars.GetComponent<PlayerBars>().EnoughStamina(staminaRequired)){
             
                     //Record current selected item
                     selectedItem = this.GetComponent<BallShooting>().selectedItem;
@@ -104,6 +114,8 @@ public class FireThrow : MonoBehaviour {
 
                         // Update stamina bars
                         statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+
+                        vibe_time_remaining = vibe_time; 
                         }
 
                     else{
@@ -115,7 +127,9 @@ public class FireThrow : MonoBehaviour {
                         battle.GetComponent<AchievementTracking>().Shot("Fireball");
 
                         // Update stamina bars
-                        statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);              
+                        statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+
+                        vibe_time_remaining = vibe_time;               
                     }
                 }
             }
