@@ -29,8 +29,10 @@ public class FireThrow : MonoBehaviour {
     public float staminaRequired = 20;
     public float vibe_time = 0.2f; //Seconds on the vibration
     private float vibe_time_remaining;
+    private bool isPaused = false;
 
     private GameObject battle;
+    public GameObject mainPlayer;
 
 
     // Use this for initialization
@@ -49,87 +51,105 @@ public class FireThrow : MonoBehaviour {
         
         // Find status bars
         statusBars = GameObject.FindGameObjectWithTag("StatusBars");
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if(vibe_time_remaining > 0){
-            vibe_time_remaining -= Time.deltaTime;
-            OVRInput.SetControllerVibration(0.6f,0.5f, controller);
-        }
-        else{
-            OVRInput.SetControllerVibration(0,0,controller);
-        }
+        mainPlayer = GameObject.FindGameObjectWithTag("MainPlayer");
 
-        //Record current element index of hand
-        elementIndex = this.GetComponent<BallShooting>().elementIndex;
+    }
 
-        //If fire is current element in hand
-        if(elementIndex == 3){
+    // Update is called once per frame
+    void Update () {
 
-            //If fireball is held, check trigger
-            if(fireball != null){
+        isPaused = mainPlayer.GetComponent<Pause>().paused;
 
-                if(OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh){
-
-                    //Calculate expected end position of fireball
-                    controller_pos = OVRInput.GetLocalControllerPosition(controller);
-                    controller_rot = OVRInput.GetLocalControllerRotation(controller);
-
-                    //Record expected end position of fireball
-                    end_pos = controller_pos + controller_rot*forward*float_dist + trackingSpace.transform.position;
-
-                    // Bring fireball to expected position each update
-                    fireball.transform.position = end_pos;            
-                }
-
-                // If trigger not held, throw fireball
-                else{
-
-                    // Launch fireball
-                    controller_rot = OVRInput.GetLocalControllerRotation(controller);
-                    fireball.GetComponent<Rigidbody>().AddForce(controller_rot*forward*thrust_const);
-                    Destroy(fireball, projectileLifetime);
-                    vibe_time_remaining = vibe_time;
-                    fireball = null;
-                    
-                }
-
+        if (!isPaused)
+        {
+            if (vibe_time_remaining > 0)
+            {
+                vibe_time_remaining -= Time.deltaTime;
+                OVRInput.SetControllerVibration(0.6f, 0.5f, controller);
+            }
+            else
+            {
+                OVRInput.SetControllerVibration(0, 0, controller);
             }
 
-            //If fireball is not held, check trigger
-            else{
+            //Record current element index of hand
+            elementIndex = this.GetComponent<BallShooting>().elementIndex;
 
-                 // Instantiate/control fireball if index trigger is held and cooldown period has passed
-                if((OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh)&&statusBars.GetComponent<PlayerBars>().EnoughStamina(staminaRequired)){
-            
-                    //Record current selected item
-                    selectedItem = this.GetComponent<BallShooting>().selectedItem;
-                    
-                    // If selected item is not null
-                    if((selectedItem != null)&&(selectedItem.tag == "Fireball")){
-                        fireball = selectedItem;
-                        fireball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                        fireball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero; 
+            //If fire is current element in hand
+            if (elementIndex == 3)
+            {
 
-                        // Update stamina bars
-                        statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+                //If fireball is held, check trigger
+                if (fireball != null)
+                {
 
-                        vibe_time_remaining = vibe_time; 
-                        }
+                    if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh)
+                    {
 
-                    else{
-                        //If controller not pointed at previous fireball, instantiate new object
+                        //Calculate expected end position of fireball
                         controller_pos = OVRInput.GetLocalControllerPosition(controller);
                         controller_rot = OVRInput.GetLocalControllerRotation(controller);
-                        end_pos = controller_pos + controller_rot*forward*float_dist + trackingSpace.transform.position;
-                        fireball = Instantiate(projectiles[elementIndex], end_pos, Quaternion.identity);
-                        battle.GetComponent<AchievementTracking>().Shot("Fireball");
 
-                        // Update stamina bars
-                        statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+                        //Record expected end position of fireball
+                        end_pos = controller_pos + controller_rot * forward * float_dist + trackingSpace.transform.position;
 
-                        vibe_time_remaining = vibe_time;               
+                        // Bring fireball to expected position each update
+                        fireball.transform.position = end_pos;
+                    }
+
+                    // If trigger not held, throw fireball
+                    else
+                    {
+
+                        // Launch fireball
+                        controller_rot = OVRInput.GetLocalControllerRotation(controller);
+                        fireball.GetComponent<Rigidbody>().AddForce(controller_rot * forward * thrust_const);
+                        Destroy(fireball, projectileLifetime);
+                        vibe_time_remaining = vibe_time;
+                        fireball = null;
+
+                    }
+
+                }
+
+                //If fireball is not held, check trigger
+                else
+                {
+
+                    // Instantiate/control fireball if index trigger is held and cooldown period has passed
+                    if ((OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, controller) > trigger_thresh) && statusBars.GetComponent<PlayerBars>().EnoughStamina(staminaRequired))
+                    {
+
+                        //Record current selected item
+                        selectedItem = this.GetComponent<BallShooting>().selectedItem;
+
+                        // If selected item is not null
+                        if ((selectedItem != null) && (selectedItem.tag == "Fireball"))
+                        {
+                            fireball = selectedItem;
+                            fireball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                            fireball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+                            // Update stamina bars
+                            statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+
+                            vibe_time_remaining = vibe_time;
+                        }
+
+                        else
+                        {
+                            //If controller not pointed at previous fireball, instantiate new object
+                            controller_pos = OVRInput.GetLocalControllerPosition(controller);
+                            controller_rot = OVRInput.GetLocalControllerRotation(controller);
+                            end_pos = controller_pos + controller_rot * forward * float_dist + trackingSpace.transform.position;
+                            fireball = Instantiate(projectiles[elementIndex], end_pos, Quaternion.identity);
+                            battle.GetComponent<AchievementTracking>().Shot("Fireball");
+
+                            // Update stamina bars
+                            statusBars.GetComponent<PlayerBars>().UseStamina(staminaRequired);
+
+                            vibe_time_remaining = vibe_time;
+                        }
                     }
                 }
             }
