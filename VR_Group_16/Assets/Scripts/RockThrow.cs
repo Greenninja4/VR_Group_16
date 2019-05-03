@@ -70,6 +70,9 @@ public class RockThrow : MonoBehaviour {
                     //Record expected end position of rock
                     end_pos = controller_pos + controller_rot*forward*float_dist + trackingSpace.transform.position;
 
+                    //Account for rotation of player
+                    //end_pos = player.transform.rotation*end_pos;
+
                     // Bring rock a fraction closer to expected position each update
                     vec_to_pos = end_pos - rock.transform.position;
                     rock.transform.position += vec_to_pos*attraction_const;            

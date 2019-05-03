@@ -10004,8 +10004,8 @@ GameObject:
   - component: {fileID: 538887039}
   - component: {fileID: 538887038}
   - component: {fileID: 538887037}
-  - component: {fileID: 538887036}
   - component: {fileID: 538887035}
+  - component: {fileID: 538887036}
   m_Layer: 0
   m_Name: RightHandAnchor
   m_TagString: Untagged
@@ -10057,13 +10057,12 @@ MonoBehaviour:
 --- !u!114 &538887036
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114643151055860956, guid: f5b527315d9d7d04392e5e643242f93e,
-    type: 2}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 538887033}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaab33b6357c79c459c2c91564c4bf56, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d936adfbb0cc0f4b8f5ae54cc9fae4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1270633708}
@@ -20637,6 +20636,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &975046919 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1242053081103112, guid: d48f887a8eccefa4c9809ec9651b8e95,
+    type: 2}
+  m_PrefabInternal: {fileID: 557445839}
 --- !u!1 &978783114
 GameObject:
   m_ObjectHideFlags: 0
@@ -20669,7 +20673,6 @@ MonoBehaviour:
   - {fileID: 1618947771414310, guid: fcd3146c827920041b41f5db30c33058, type: 2}
   - {fileID: 1272952387971198, guid: 6b7685ab7a092ed468d29a5f6262d9bc, type: 2}
   - {fileID: 1090672891181166, guid: 4f5c54a6ec34a754d967e95ba52b217d, type: 2}
-  spawnTime: 3
   spawnPoints:
   - {fileID: 1328118841}
   - {fileID: 743690678}
@@ -21250,8 +21253,8 @@ GameObject:
   - component: {fileID: 1419219082}
   - component: {fileID: 1419219081}
   - component: {fileID: 1419219080}
-  - component: {fileID: 1419219079}
   - component: {fileID: 1419219078}
+  - component: {fileID: 1419219079}
   m_Layer: 0
   m_Name: LeftHandAnchor
   m_TagString: Untagged
@@ -21304,13 +21307,12 @@ MonoBehaviour:
 --- !u!114 &1419219079
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114651970308070604, guid: f5b527315d9d7d04392e5e643242f93e,
-    type: 2}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1419219076}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaab33b6357c79c459c2c91564c4bf56, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d936adfbb0cc0f4b8f5ae54cc9fae4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1270633708}
@@ -21339,12 +21341,13 @@ MonoBehaviour:
   Rcontroller: 2
   leftHandAnchor: {fileID: 1419219076}
   rightHandAnchor: {fileID: 538887033}
-  statusBars: {fileID: 1242053081103112, guid: d48f887a8eccefa4c9809ec9651b8e95, type: 2}
+  statusBars: {fileID: 975046919}
+  active_walls: 0
   max_active_walls: 3
   float_dist: 4
   disp_max: 0.8
   wallLifetime: 10
-  pos_y_const: 0.01
+  pos_y_const: -1.2
   staminaRequired: 20
 --- !u!114 &1419219081
 MonoBehaviour:
