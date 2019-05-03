@@ -112,7 +112,6 @@ public class EarthWall : MonoBehaviour
             else if (active_walls < max_active_walls){
 
                 // If triggers held, build new wall
-                print(statusBars.GetComponent<PlayerBars>().EnoughStamina());
                 if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Lcontroller) > 0.5 
                 && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, Rcontroller) > 0.5
                 && statusBars.GetComponent<PlayerBars>().EnoughStamina()){
@@ -132,9 +131,6 @@ public class EarthWall : MonoBehaviour
 
                     // Set wall rotation such that it starts normal to player
                     wall_rot = Quaternion.Euler(0, Mathf.Atan2(avg_hands_norm.x,avg_hands_norm.z) * Mathf.Rad2Deg, 0);
-
-                    print(wall_pos_min);
-                    print(wall_rot);
 
                     // Produce new wall object
                     cur_wall = Instantiate(rockwallprefab, wall_pos_min, wall_rot);
