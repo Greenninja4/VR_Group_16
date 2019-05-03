@@ -11138,6 +11138,7 @@ MonoBehaviour:
   leftHandAnchor: {fileID: 2102626143}
   rightHandAnchor: {fileID: 1169654297}
   statusBars: {fileID: 1242053081103112, guid: d48f887a8eccefa4c9809ec9651b8e95, type: 2}
+  active_walls: 0
   max_active_walls: 3
   float_dist: 4
   disp_max: 0.8
