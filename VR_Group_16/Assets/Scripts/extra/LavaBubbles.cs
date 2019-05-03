@@ -29,7 +29,7 @@ public class LavaBubbles : MonoBehaviour {
 		float xOffset = Random.Range(0, offsets);
 		float zOffset = Random.Range(0, offsets);
 		Vector3 posOffset = new Vector3(xOffset, 0, zOffset);
-		int index = (int)Random.Range(0, positions.GetLength(0)+1);
+		int index = (int)Random.Range(0, positions.GetLength(0));
 		Vector3 pos = positions[index].transform.position + posOffset;
 		GameObject myBubble = Instantiate(bubble, pos, Quaternion.identity);
 		Destroy(myBubble, bubbleKillTime);
