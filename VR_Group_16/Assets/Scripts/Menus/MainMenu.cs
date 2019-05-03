@@ -58,12 +58,24 @@ public class MainMenu : MonoBehaviour {
         if(selectedItem.name == "BattleWater"){
             UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"BattleWater");
         }
+        if(selectedItem.name == "BattleAir"){
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"BattleAir");
+        }
+        if(selectedItem.name == "BattleFire"){
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"BattleFire");
+        }
         // Explore -> arena selection buttons (earth, water)
         if(selectedItem.name == "ExploreEarth"){
             UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"ExploreEarth");
         }
         if(selectedItem.name == "ExploreWater"){
             UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"ExploreWater");
+        }
+        if(selectedItem.name == "ExploreAir"){
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"ExploreAir");
+        }
+        if(selectedItem.name == "ExploreFire"){
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"ExploreFire");
         }
         // Battle & Explore back buttons
         if(selectedItem.name == "Back"){
