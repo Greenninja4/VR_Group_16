@@ -120,6 +120,7 @@ public class BallShooting : MonoBehaviour {
                     break;
             }
         }
+        Debug.Log(battle.name);
         battle.GetComponent<AchievementTracking>().playTime(elementIDs[elementIndex], Time.deltaTime);
     }
 

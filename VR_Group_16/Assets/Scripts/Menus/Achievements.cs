@@ -202,7 +202,7 @@ public class Achievements : MonoBehaviour
 
         //Handle menu transitions
         if(selectedItem.name == "Quit"){
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"BattleEarth");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName:"Startmenu");
 
         }
 
@@ -223,6 +223,10 @@ public class Achievements : MonoBehaviour
             hitMenu.SetActive(true);
             this.curr_submenu = targetMenu;
         }
+    }
+
+    void resetAchievements(){
+        PlayerPrefs.DeleteAll();
     }
 
 }
