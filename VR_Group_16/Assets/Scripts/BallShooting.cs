@@ -11,6 +11,7 @@ public class BallShooting : MonoBehaviour {
     public Vector3 hitpoint;
     public GameObject selectedItem;
     private float range = 100f;
+    private Color brown = new Color(0.6f,0.4f,0.1f, 0.4f);
 
     // private float nextFire, trigger, fireRate = .1f;
     // public GameObject[] projectiles;
@@ -31,7 +32,7 @@ public class BallShooting : MonoBehaviour {
     void Start () {
         battle = this.transform.root.gameObject;
         laserLine = GetComponent<LineRenderer>();
-        laserLine.material.color = Color.yellow;
+        laserLine.material.color = brown;
     }
 	
 	// Update is called once per frame
@@ -76,7 +77,7 @@ public class BallShooting : MonoBehaviour {
                     break;
                 case 1:
                     elementIndex = 2;
-                    laserLine.material.color = Color.green;
+                    laserLine.material.color = Color.white;
                     break;
                 case 2:
                     elementIndex = 3;
@@ -84,11 +85,11 @@ public class BallShooting : MonoBehaviour {
                     break;
                 case 3:
                     elementIndex = 0;
-                    laserLine.material.color = Color.yellow;
+                    laserLine.material.color = brown;
                     break;
                 default:
                     elementIndex = 0;
-                    laserLine.material.color = Color.yellow;
+                    laserLine.material.color = brown;
                     break;
             }
         }
@@ -104,7 +105,7 @@ public class BallShooting : MonoBehaviour {
                     break;
                 case 1:
                     elementIndex = 0;
-                    laserLine.material.color = Color.yellow;
+                    laserLine.material.color = brown;
                     break;
                 case 2:
                     elementIndex = 1;
@@ -112,11 +113,11 @@ public class BallShooting : MonoBehaviour {
                     break;
                 case 3:
                     elementIndex = 2;
-                    laserLine.material.color = Color.green;
+                    laserLine.material.color = Color.white;
                     break;
                 default:
                     elementIndex = 0;
-                    laserLine.material.color = Color.yellow;
+                    laserLine.material.color = brown;
                     break;
             }
         }

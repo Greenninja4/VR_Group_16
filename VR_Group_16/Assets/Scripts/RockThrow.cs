@@ -30,7 +30,7 @@ public class RockThrow : MonoBehaviour {
     public float thrust_const = 175.0f; //Constant of thrust
     public int projectileLifetime = 20;
     public float staminaRequired = 20;
-    public float vibe_time = 0.2f; //Seconds on the vibration
+    public float vibe_time = 1f; //Seconds on the vibration
     private float vibe_time_remaining;
     private bool isPaused = false;
 
@@ -64,6 +64,7 @@ public class RockThrow : MonoBehaviour {
         isPaused = mainPlayer.GetComponent<Pause>().paused;
         if (!isPaused)
         {
+            print(vibe_time_remaining);
             if (vibe_time_remaining > 0)
             {
                 vibe_time_remaining -= Time.deltaTime;
@@ -72,6 +73,7 @@ public class RockThrow : MonoBehaviour {
             else
             {
                 OVRInput.SetControllerVibration(0, 0, controller);
+                vibe_time_remaining = 0f;
             }
 
             //Record current element index of hand

@@ -650,7 +650,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1702293030690630}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.4574451, y: -2.44, z: -6}
+  m_LocalPosition: {x: 12.231268, y: -0.6477251, z: 1.2537576}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4529726015056598}
@@ -1112,6 +1112,8 @@ MonoBehaviour:
   thrust_const: 175
   projectileLifetime: 20
   staminaRequired: 20
+  vibe_time: 0.2
+  mainPlayer: {fileID: 0}
 --- !u!114 &114203504397889690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1135,6 +1137,8 @@ MonoBehaviour:
   thrust_const: 175
   projectileLifetime: 20
   staminaRequired: 20
+  vibe_time: 0.2
+  mainPlayer: {fileID: 0}
 --- !u!114 &114206787304968670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1163,6 +1167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d936adfbb0cc0f4b8f5ae54cc9fae4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  paused: 0
   player: {fileID: 1702293030690630}
   centerEye: {fileID: 0}
   pauseMenu: {fileID: 0}
@@ -1195,6 +1200,8 @@ MonoBehaviour:
   thrust_const: 175
   projectileLifetime: 20
   staminaRequired: 20
+  vibe_time: 0.2
+  mainPlayer: {fileID: 0}
 --- !u!114 &114258505233380530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1207,6 +1214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1702293030690630}
+  mainPlayer: {fileID: 0}
   centerEye: {fileID: 1829185237041870}
   rockwallprefab: {fileID: 1866478044964040, guid: fe08b1899db1e694ea4f7c454522c451,
     type: 2}
@@ -1222,6 +1230,7 @@ MonoBehaviour:
   wallLifetime: 10
   pos_y_const: -1.15
   staminaRequired: 20
+  vibe_time: 0.5
 --- !u!114 &114304493805659160
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1271,6 +1280,8 @@ MonoBehaviour:
   thrust_const: 175
   projectileLifetime: 20
   staminaRequired: 20
+  vibe_time: 0.2
+  mainPlayer: {fileID: 0}
 --- !u!114 &114379543752256488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1847,6 +1858,8 @@ MonoBehaviour:
   thrust_const: 175
   projectileLifetime: 20
   staminaRequired: 20
+  vibe_time: 0.2
+  mainPlayer: {fileID: 0}
 --- !u!114 &114912166012902874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1871,6 +1884,8 @@ MonoBehaviour:
   thrust_const: 175
   projectileLifetime: 20
   staminaRequired: 20
+  vibe_time: 0.2
+  mainPlayer: {fileID: 0}
 --- !u!114 &114914464753565910
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1906,6 +1921,8 @@ MonoBehaviour:
   thrust_const: 175
   projectileLifetime: 20
   staminaRequired: 20
+  vibe_time: 0.2
+  mainPlayer: {fileID: 0}
 --- !u!114 &114948648851976586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1941,6 +1958,8 @@ MonoBehaviour:
   thrust_const: 175
   projectileLifetime: 20
   staminaRequired: 20
+  vibe_time: 0.2
+  mainPlayer: {fileID: 0}
 --- !u!120 &120647363612230658
 LineRenderer:
   m_ObjectHideFlags: 1

@@ -113,11 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &3458572 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1702293030690630, guid: f5b527315d9d7d04392e5e643242f93e,
-    type: 2}
-  m_PrefabInternal: {fileID: 361464227}
 --- !u!4 &3458577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4600163985494306, guid: f5b527315d9d7d04392e5e643242f93e,
@@ -422,31 +417,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114206932969670014, guid: f5b527315d9d7d04392e5e643242f93e,
-        type: 2}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 3458572}
-    - target: {fileID: 114206932969670014, guid: f5b527315d9d7d04392e5e643242f93e,
-        type: 2}
-      propertyPath: pauseMenu
-      value: 
-      objectReference: {fileID: 923107655}
-    - target: {fileID: 114206932969670014, guid: f5b527315d9d7d04392e5e643242f93e,
-        type: 2}
-      propertyPath: Rcontroller
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114206932969670014, guid: f5b527315d9d7d04392e5e643242f93e,
-        type: 2}
-      propertyPath: Lcontroller
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 114258505233380530, guid: f5b527315d9d7d04392e5e643242f93e,
         type: 2}
       propertyPath: statusBars
       value: 
       objectReference: {fileID: 1865254791}
+    - target: {fileID: 114206932969670014, guid: f5b527315d9d7d04392e5e643242f93e,
+        type: 2}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 923107655}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5b527315d9d7d04392e5e643242f93e, type: 2}
   m_IsPrefabAsset: 0
